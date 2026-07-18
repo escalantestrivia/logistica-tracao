@@ -117,40 +117,46 @@
 
 <script>
 
-const usuarios = [
+async function login() {
 
-    {
-        matricula:"123456",
-        senha:"123456",
-        nome:"Roger Silva"
+    const matricula = document.getElementById("txtMatricula").value.trim();
+
+    const senha = document.getElementById("txtSenha").value;
+
+    try {
+
+        const resposta = await fetch("usuarios.json");
+
+        const usuarios = await resposta.json();
+
+        const usuario = usuarios.find(u =>
+
+            u.matricula === matricula &&
+            u.senha === senha
+
+        );
+
+        if (!usuario) {
+
+            alert("Matrícula ou senha inválidas.");
+
+            return;
+
+        }
+
+        localStorage.setItem("usuario", JSON.stringify(usuario));
+
+        window.location.href = "index.html";
+
     }
 
-];
+    catch (erro) {
 
-function login(){
+        alert("Erro ao carregar usuários.");
 
-    const matricula=document.getElementById("txtMatricula").value.trim();
-
-    const senha=document.getElementById("txtSenha").value;
-
-    const usuario=usuarios.find(u=>
-
-        u.matricula===matricula &&
-        u.senha===senha
-
-    );
-
-    if(!usuario){
-
-        alert("Matrícula ou senha inválidas.");
-
-        return;
+        console.error(erro);
 
     }
-
-    localStorage.setItem("usuario",JSON.stringify(usuario));
-
-    window.location.href="index.html";
 
 }
 
