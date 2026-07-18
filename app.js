@@ -173,6 +173,10 @@ function iniciarRelatorio() {
 // Frota Equipada
 // ===================================
 
+// ===================================
+// Frota Equipada
+// ===================================
+
 function carregarTabelaTrens() {
 
     const tbody = document.getElementById("tbodyTrens");
@@ -187,14 +191,36 @@ function carregarTabelaTrens() {
 
         linha.innerHTML = `
             <td class="text-center fw-bold">${i}</td>
-            <td contenteditable="true" tabindex="0"></td>
-            <td contenteditable="true" tabindex="0"></td>
-            <td contenteditable="true" tabindex="0"></td>
+
+            <td>
+                <div class="celula"
+                     contenteditable="true"
+                     tabindex="0"></div>
+            </td>
+
+            <td>
+                <div class="celula"
+                     contenteditable="true"
+                     tabindex="0"></div>
+            </td>
+
+            <td>
+                <div class="celula"
+                     contenteditable="true"
+                     tabindex="0"></div>
+            </td>
         `;
 
         tbody.appendChild(linha);
 
     }
+
+    // Atualiza a quantidade quando o usuário digitar
+    tbody.querySelectorAll(".celula").forEach(celula => {
+
+        celula.addEventListener("input", atualizarQuantidadeFrota);
+
+    });
 
 }
 function habilitarColarExcel() {
@@ -203,6 +229,7 @@ function habilitarColarExcel() {
 
     if (!tbody) return;
 
+    // Evita registrar o evento mais de uma vez
     tbody.onpaste = function (e) {
 
         e.preventDefault();
@@ -211,19 +238,22 @@ function habilitarColarExcel() {
 
         const linhas = texto.trim().split(/\r?\n/);
 
-        // Descobre a célula onde começou a colagem
-        const celulaInicial = e.target.closest("td");
+        const divInicial = e.target.closest(".celula");
 
-        if (!celulaInicial) return;
+        if (!divInicial) return;
 
-        const linhaInicial = celulaInicial.parentElement.rowIndex;
-        const colunaInicial = celulaInicial.cellIndex;
+        const tdInicial = divInicial.parentElement;
+
+        const linhaInicial = tdInicial.parentElement.rowIndex;
+        const colunaInicial = tdInicial.cellIndex;
 
         linhas.forEach((linha, i) => {
 
-            const valores = linha.split("\t");
+            if (linha.trim() === "") return;
 
-            valores.forEach((valor, j) => {
+            const colunas = linha.split("\t");
+
+            colunas.forEach((valor, j) => {
 
                 const tr = tbody.rows[linhaInicial + i];
 
@@ -233,7 +263,7 @@ function habilitarColarExcel() {
 
                 if (!td) return;
 
-                td.innerText = valor.trim();
+                td.firstElementChild.innerText = valor.trim();
 
             });
 
@@ -241,7 +271,7 @@ function habilitarColarExcel() {
 
         atualizarQuantidadeFrota();
 
-    });
+    };
 
 }
 function atualizarQuantidadeFrota() {
@@ -254,9 +284,9 @@ function atualizarQuantidadeFrota() {
 
     Array.from(tbody.rows).forEach(linha => {
 
-        const tue = linha.cells[1].innerText.trim();
+        const div = linha.cells[1].querySelector(".celula");
 
-        if (tue !== "") {
+        if (div && div.innerText.trim() !== "") {
             total++;
         }
 
@@ -269,38 +299,6 @@ function atualizarQuantidadeFrota() {
     }
 
 }
-function calcularTotalGestao() {
-
-    const controle =
-        Number(document.getElementById("controleApresentacao")?.value) || 0;
-
-    const ausencias =
-        Number(document.getElementById("ausencias")?.value) || 0;
-
-    const viras =
-        Number(document.getElementById("viras")?.value) || 0;
-
-    const posto =
-        Number(document.getElementById("postoEscala")?.value) || 0;
-
-    const outros =
-        Number(document.getElementById("outros")?.value) || 0;
-
-    const total =
-        controle -
-        ausencias -
-        viras -
-        posto -
-        outros;
-
-    const lblTotal = document.getElementById("totalGestao");
-
-    if (lblTotal) {
-        lblTotal.innerText = total;
-    }
-
-}
-
 // ===================================
 // Finalizar
 // ===================================
