@@ -662,3 +662,158 @@ function adicionarLocomotiva() {
 `);
 
 }
+
+async function gerarPDF(){
+
+    const { jsPDF } = window.jspdf;
+
+    const pdf = new jsPDF("p","mm","a4");
+
+    let y = 15;
+
+    const relatorio =
+        JSON.parse(localStorage.getItem("relatorio")) || {};
+
+    pdf.setFontSize(18);
+    pdf.text("RELATÓRIO LOGÍSTICA DA TRAÇÃO",105,y,{align:"center"});
+
+    y += 12;
+
+    pdf.setFontSize(12);
+
+    pdf.text("IDENTIFICAÇÃO",14,y);
+
+    y += 8;
+
+    if(relatorio.identificacao){
+
+        Object.entries(relatorio.identificacao).forEach(([campo,valor])=>{
+
+            pdf.text(`${campo}: ${valor}`,15,y);
+
+            y += 6;
+
+        });
+
+    }
+
+    y += 8;
+
+    pdf.text("GESTÃO DE OPERADORES",14,y);
+
+    y += 8;
+
+    if(relatorio.checklist){
+
+        Object.entries(relatorio.checklist).forEach(([campo,valor])=>{
+
+            pdf.text(`${campo}: ${valor}`,15,y);
+
+            y += 6;
+
+        });
+
+    }
+
+    y += 8;
+
+    pdf.text("FATOS RELEVANTES",14,y);
+
+    y += 8;
+
+    if(relatorio.ocorrencias){
+
+        relatorio.ocorrencias.forEach((o,i)=>{
+
+            pdf.text(`${i+1}. ${o.local}`,15,y);
+
+            y +=5;
+
+            pdf.text(o.descricao,20,y);
+
+            y +=10;
+
+        });
+
+    }
+
+    if(y>240){
+
+        pdf.addPage();
+
+        y=20;
+
+    }
+
+    pdf.text("LOCOMOTIVAS",14,y);
+
+    y += 8;
+
+    if(relatorio.locomotivas){
+
+        relatorio.locomotivas.forEach((l,i)=>{
+
+            pdf.setFont(undefined,"bold");
+
+            pdf.text(`LOCOMOTIVA ${i+1}`,14,y);
+
+            pdf.setFont(undefined,"normal");
+
+            y+=6;
+
+            pdf.text(`Trem: ${l.trem}`,15,y); y+=6;
+            pdf.text(`Operador 1: ${l.operador1}`,15,y); y+=6;
+            pdf.text(`Operador 2: ${l.operador2}`,15,y); y+=6;
+
+            pdf.text(`Atende SA: ${l.atendeSA}`,15,y); y+=6;
+
+            if(l.atendeSA=="Sim"){
+
+                pdf.text(`Número SA: ${l.numeroSA}`,15,y);
+
+                y+=6;
+
+            }
+
+            pdf.text(`Local: ${l.local}`,15,y); y+=6;
+            pdf.text(`KM: ${l.km}`,15,y); y+=6;
+            pdf.text(`Diesel: ${l.diesel}`,15,y); y+=6;
+            pdf.text(`Horímetro: ${l.horimetro}`,15,y); y+=6;
+
+            pdf.text(`Calços: ${l.calcos}`,15,y); y+=6;
+            pdf.text(`Talha: ${l.talha}`,15,y); y+=6;
+            pdf.text(`Kit SOS: ${l.kitSOS}`,15,y); y+=6;
+            pdf.text(`Mangueiras: ${l.mangotes}`,15,y); y+=6;
+            pdf.text(`Chaves: ${l.chaves}`,15,y); y+=6;
+            pdf.text(`Ferramentas: ${l.ferramentas}`,15,y); y+=6;
+            pdf.text(`Adaptador: ${l.adaptador}`,15,y); y+=6;
+            pdf.text(`Níveis: ${l.niveis}`,15,y); y+=6;
+
+            pdf.text("Observações:",15,y);
+
+            y+=6;
+
+            const texto = pdf.splitTextToSize(
+                l.observacoesGerais || "",
+                170
+            );
+
+            pdf.text(texto,20,y);
+
+            y += texto.length*6 + 10;
+
+            if(y>250){
+
+                pdf.addPage();
+
+                y=20;
+
+            }
+
+        });
+
+    }
+
+    pdf.save("Relatorio_Logistica_Tracao.pdf");
+
+}
