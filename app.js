@@ -203,7 +203,7 @@ function habilitarColarExcel() {
 
     if (!tbody) return;
 
-    tbody.addEventListener("paste", function (e) {
+    tbody.onpaste = function (e) {
 
         e.preventDefault();
 
