@@ -8,7 +8,6 @@
 const usuario = JSON.parse(localStorage.getItem("usuario"));
 let relatorioIniciado = false;
 let numeroOcorrencia = 0;
-let numeroLocomotiva = 0;
 
 if (!usuario) {
     window.location.href = "login.html";
@@ -424,6 +423,8 @@ function salvarFatos() {
 
 }
 
+let numeroLocomotiva = 0;
+
 function adicionarLocomotiva() {
 
     numeroLocomotiva++;
@@ -444,12 +445,12 @@ function adicionarLocomotiva() {
 
         <div class="row g-3">
 
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <label class="form-label">Trem</label>
                 <input type="text" class="form-control trem">
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <label class="form-label">Operador 1</label>
                 <input type="text" class="form-control operador1">
             </div>
@@ -467,9 +468,7 @@ function adicionarLocomotiva() {
 
             <div class="col-md-3">
 
-                <label class="form-label">
-                    Atendendo SA
-                </label>
+                <label class="form-label">Atendendo SA</label>
 
                 <select
                     class="form-select atendeSA"
@@ -485,7 +484,7 @@ function adicionarLocomotiva() {
         </div>
 
         <div
-            class="mt-3 campoSA"
+            class="campoSA mt-3"
             style="display:none;">
 
             <label class="form-label">
@@ -503,55 +502,28 @@ function adicionarLocomotiva() {
         <div class="row g-3">
 
             <div class="col-md-3">
-
                 <label class="form-label">Local</label>
-
-                <input
-                    type="text"
-                    class="form-control local">
-
+                <input type="text" class="form-control local">
             </div>
 
             <div class="col-md-2">
-
                 <label class="form-label">KM</label>
-
-                <input
-                    type="number"
-                    class="form-control km">
-
+                <input type="number" class="form-control km">
             </div>
 
             <div class="col-md-2">
-
                 <label class="form-label">Diesel</label>
-
-                <input
-                    type="number"
-                    class="form-control diesel">
-
+                <input type="number" class="form-control diesel">
             </div>
 
             <div class="col-md-2">
-
                 <label class="form-label">Horímetro</label>
-
-                <input
-                    type="number"
-                    class="form-control horimetro">
-
+                <input type="number" class="form-control horimetro">
             </div>
 
             <div class="col-md-3">
-
-                <label class="form-label">
-                    Qtde. Calços
-                </label>
-
-                <input
-                    type="number"
-                    class="form-control calcos">
-
+                <label class="form-label">Calços</label>
+                <input type="number" class="form-control calcos">
             </div>
 
         </div>
@@ -561,5 +533,18 @@ function adicionarLocomotiva() {
 </div>
 
 `);
+
+}
+
+function toggleSA(select){
+
+    const card = select.closest(".card");
+
+    const campo = card.querySelector(".campoSA");
+
+    campo.style.display =
+        select.value === "Sim"
+            ? "block"
+            : "none";
 
 }
