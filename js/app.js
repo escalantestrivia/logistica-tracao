@@ -43,6 +43,9 @@ function mostrarTela(nome) {
 document.getElementById("txtNome").value = usuario.nome;
 document.getElementById("txtMatricula").value = usuario.matricula;
 
+document.getElementById("lblNome").textContent = usuario.nome;
+document.getElementById("lblMatricula").textContent = usuario.matricula;
+
 function iniciarRelatorio(){
 
     alert("Relatório iniciado.");
