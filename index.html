@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Logística da Tração</title>
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-dark bg-primary">
+
+<div class="container-fluid">
+
+<span class="navbar-brand mb-0 h1">
+
+LOGÍSTICA DA TRAÇÃO
+
+</span>
+
+<div class="text-white">
+
+<span id="usuarioLogado"></span>
+
+</div>
+
+</div>
+
+</nav>
+
+<div class="container-fluid mt-3">
+
+<div class="row mb-3">
+
+<div class="col-md-2">
+
+<label>Data</label>
+
+<input
+type="date"
+id="data"
+class="form-control">
+
+</div>
+
+<div class="col-md-2">
+
+<label>Local</label>
+
+<select
+id="local"
+class="form-select">
+
+<option>SUZ</option>
+
+<option>BAS</option>
+
+</select>
+
+</div>
+
+<div class="col-md-2">
+
+<label>Turno</label>
+
+<select
+id="turno"
+class="form-select">
+
+<option>Manhã</option>
+
+<option>Tarde</option>
+
+<option>Noite</option>
+
+</select>
+
+</div>
+
+<div class="col-md-3">
+
+<label>Escalante</label>
+
+<input
+id="escalante"
+class="form-control"
+readonly>
+
+</div>
+
+<div class="col-md-3 d-grid">
+
+<label>&nbsp;</label>
+
+<button
+class="btn btn-danger"
+onclick="gerarPDF()">
+
+Finalizar Relatório
+
+</button>
+
+</div>
+
+</div>
+
+<ul class="nav nav-tabs">
+
+<li class="nav-item">
+
+<button
+class="nav-link active"
+onclick="abrir('checklist')">
+
+Check List
+
+</button>
+
+</li>
+
+<li class="nav-item">
+
+<button
+class="nav-link"
+onclick="abrir('fatos')">
+
+Fatos Relevantes
+
+</button>
+
+</li>
+
+<li class="nav-item">
+
+<button
+class="nav-link"
+onclick="abrir('locomotivas')">
+
+Locomotivas
+
+</button>
+
+</li>
+
+<li class="nav-item">
+
+<button
+class="nav-link"
+onclick="abrir('radios')">
+
+Rádios
+
+</button>
+
+</li>
+
+<li class="nav-item">
+
+<button
+class="nav-link"
+onclick="abrir('historico')">
+
+Histórico
+
+</button>
+
+</li>
+
+</ul>
+
+<div id="checklist" class="aba mt-3">
+
+</div>
+
+<div id="fatos" class="aba mt-3 d-none">
+
+</div>
+
+<div id="locomotivas" class="aba mt-3 d-none">
+
+</div>
+
+<div id="radios" class="aba mt-3 d-none">
+
+</div>
+
+<div id="historico" class="aba mt-3 d-none">
+
+</div>
+
+</div>
+
+<script src="js/bootstrap.bundle.min.js"></script>
+
+<script src="js/storage.js"></script>
+
+<script src="js/login.js"></script>
+
+<script src="js/checklist.js"></script>
+
+<script src="js/fatos.js"></script>
+
+<script src="js/locomotivas.js"></script>
+
+<script src="js/radios.js"></script>
+
+<script src="js/pdf.js"></script>
+
+<script src="js/app.js"></script>
+
+</body>
+
+</html>
