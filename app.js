@@ -194,9 +194,6 @@ function iniciarRelatorio() {
 // Frota Equipada
 // ===================================
 
-// ===================================
-// Frota Equipada
-// ===================================
 
 function carregarTabelaTrens() {
 
@@ -321,10 +318,6 @@ function atualizarQuantidadeFrota() {
     }
 
 }
-// ===================================
-// Finalizar
-// ===================================
-
 function limparFrota() {
 
     if (!confirm("Deseja realmente limpar toda a tabela?")) {
@@ -336,7 +329,6 @@ function limparFrota() {
         .forEach(input => input.value = "");
 
 }
-
 function finalizarRelatorio() {
 
     alert("Função em desenvolvimento.");
