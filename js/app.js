@@ -1,156 +1,74 @@
-//==================================================
+// ================================
 // LOGÍSTICA DA TRAÇÃO
 // app.js
-//==================================================
+// ================================
 
-// Usuário logado
-let usuario = null;
+// Verifica login
+const usuario = JSON.parse(localStorage.getItem("usuario"));
 
-//==================================================
-// Inicialização
-//==================================================
-
-document.addEventListener("DOMContentLoaded", iniciarSistema);
-
-function iniciarSistema() {
-
-    verificarLogin();
-
-    carregarUsuario();
-
-    mostrarTela("identificacao");
-
+if (!usuario) {
+    window.location.href = "login.html";
 }
 
-//==================================================
-// Login
-//==================================================
+// Preenche informações do usuário
+window.onload = function () {
 
-function verificarLogin() {
-
-    usuario = JSON.parse(localStorage.getItem("usuario"));
-
-    if (!usuario) {
-
-        window.location.href = "login.html";
-
-    }
-
-}
-
-function carregarUsuario() {
-
-    // Navbar
+    // Barra superior
     document.getElementById("lblNome").textContent = usuario.nome;
     document.getElementById("lblMatricula").textContent = usuario.matricula;
 
-    // Identificação
+    // Tela Identificação
     document.getElementById("txtNome").value = usuario.nome;
     document.getElementById("txtMatricula").value = usuario.matricula;
 
-}
+    // Data atual
+    document.getElementById("txtData").value =
+        new Date().toISOString().split("T")[0];
 
-function logout() {
+    // Abre primeira tela
+    mostrarTela("identificacao");
+};
 
-    localStorage.removeItem("usuario");
-
-    window.location.href = "login.html";
-
-}
-
-//==================================================
-// Navegação
-//==================================================
+// ===================================
+// Troca de telas
+// ===================================
 
 function mostrarTela(tela) {
 
     const telas = [
-
         "identificacao",
         "checklist",
         "fatos",
         "locomotivas",
         "historico"
-
     ];
 
-    telas.forEach(nome => {
+    telas.forEach(id => {
 
-        const div = document.getElementById(nome);
-
-        if (div) {
-
-            div.style.display = "none";
-
-        }
+        document.getElementById(id).style.display =
+            (id === tela) ? "block" : "none";
 
     });
 
-    const atual = document.getElementById(tela);
-
-    if (atual) {
-
-        atual.style.display = "block";
-
-    }
-
-    atualizarMenu(tela);
-
-}
-
-function atualizarMenu(tela) {
-
-    const botoes = [
-
-        "menuIdentificacao",
-        "menuChecklist",
-        "menuFatos",
-        "menuLocomotivas",
-        "menuHistorico"
-
-    ];
-
-    botoes.forEach(botao => {
-
-        const item = document.getElementById(botao);
-
-        if (item) {
-
-            item.classList.remove("active");
-
-        }
-
+    // Atualiza menu lateral
+    document.querySelectorAll(".list-group-item").forEach(item => {
+        item.classList.remove("active");
     });
 
-    switch (tela) {
+    const botoes = {
+        identificacao: "menuIdentificacao",
+        checklist: "menuChecklist",
+        fatos: "menuFatos",
+        locomotivas: "menuLocomotivas",
+        historico: "menuHistorico"
+    };
 
-        case "identificacao":
-            document.getElementById("menuIdentificacao").classList.add("active");
-            break;
-
-        case "checklist":
-            document.getElementById("menuChecklist").classList.add("active");
-            break;
-
-        case "fatos":
-            document.getElementById("menuFatos").classList.add("active");
-            break;
-
-        case "locomotivas":
-            document.getElementById("menuLocomotivas").classList.add("active");
-            break;
-
-        case "historico":
-            document.getElementById("menuHistorico").classList.add("active");
-            break;
-
-    }
-
+    document.getElementById(botoes[tela]).classList.add("active");
 }
 
-//==================================================
-// Identificação
-//==================================================
+// ===================================
+// Iniciar Relatório
+// ===================================
 
 function iniciarRelatorio() {
 
@@ -158,52 +76,51 @@ function iniciarRelatorio() {
     const turno = document.getElementById("cmbTurno").value;
     const data = document.getElementById("txtData").value;
 
-    if (posto === "") {
-
-        alert("Selecione o posto.");
-
+    if (!posto) {
+        alert("Selecione o Posto.");
         return;
-
     }
 
-    if (turno === "") {
-
-        alert("Selecione o turno.");
-
+    if (!turno) {
+        alert("Selecione o Turno.");
         return;
-
     }
 
-    if (data === "") {
-
-        alert("Informe a data.");
-
+    if (!data) {
+        alert("Informe a Data.");
         return;
-
     }
 
     const relatorio = {
 
         nome: usuario.nome,
         matricula: usuario.matricula,
+
         posto,
         turno,
-        data
+        data,
+
+        checklist: [],
+        fatos: [],
+        locomotivas: [],
+        historico: []
 
     };
 
-    localStorage.setItem("relatorio", JSON.stringify(relatorio));
+    localStorage.setItem(
+        "relatorio",
+        JSON.stringify(relatorio)
+    );
 
     mostrarTela("checklist");
-
 }
 
-//==================================================
-// PDF
-//==================================================
+// ===================================
+// Finalizar
+// ===================================
 
 function finalizarRelatorio() {
 
-    alert("Módulo PDF será implementado posteriormente.");
+    alert("Função em desenvolvimento.");
 
 }
