@@ -7,6 +7,7 @@
 // Login
 const usuario = JSON.parse(localStorage.getItem("usuario"));
 let relatorioIniciado = false;
+let numeroOcorrencia = 0;
 
 if (!usuario) {
     window.location.href = "login.html";
@@ -356,5 +357,80 @@ function salvarChecklist() {
     localStorage.setItem("relatorio", JSON.stringify(relatorio));
 
     mostrarTela("fatos");
+
+}
+
+function adicionarOcorrencia() {
+
+    numeroOcorrencia++;
+
+    const posto = document.getElementById("cmbPosto").value;
+
+    document.getElementById("listaOcorrencias").insertAdjacentHTML("beforeend", `
+
+        <div class="card mb-3">
+
+            <div class="card-header">
+
+                <strong>${numeroOcorrencia}ª Ocorrência</strong>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="mb-3">
+
+                    <label class="form-label">Local</label>
+
+                    <input
+                        type="text"
+                        class="form-control localOcorrencia"
+                        value="${posto}"
+                        readonly>
+
+                </div>
+
+                <div>
+
+                    <label class="form-label">Descrição</label>
+
+                    <textarea
+                        class="form-control descricaoOcorrencia"
+                        rows="6"
+                        placeholder="Descreva a ocorrência..."></textarea>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `);
+
+}
+
+function salvarFatos() {
+
+    const relatorio = JSON.parse(localStorage.getItem("relatorio"));
+
+    relatorio.fatos = [];
+
+    document.querySelectorAll("#listaOcorrencias .card").forEach(card => {
+
+        relatorio.fatos.push({
+
+            ocorrencia: card.querySelector(".card-header strong").textContent,
+
+            local: card.querySelector(".localOcorrencia").value,
+
+            descricao: card.querySelector(".descricaoOcorrencia").value
+
+        });
+
+    });
+
+    localStorage.setItem("relatorio", JSON.stringify(relatorio));
+
+    mostrarTela("locomotivas");
 
 }
