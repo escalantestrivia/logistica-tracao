@@ -29,10 +29,20 @@ window.onload = function () {
         new Date().toISOString().split("T")[0];
 
     // Última tela
+    const relatorio = JSON.parse(localStorage.getItem("relatorio"));
+
+if (relatorio) {
+
     const ultimaTela =
         localStorage.getItem("ultimaTela") || "identificacao";
 
     mostrarTela(ultimaTela);
+
+} else {
+
+    mostrarTela("identificacao");
+
+}
 
     // Eventos Gestão de Operadores
     [
