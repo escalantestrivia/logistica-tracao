@@ -3,31 +3,79 @@
 // app.js
 // ================================
 
-// Verifica login
+// Login
 const usuario = JSON.parse(localStorage.getItem("usuario"));
 
 if (!usuario) {
     window.location.href = "login.html";
 }
 
-// Preenche informações do usuário
+// Inicialização
 window.onload = function () {
 
     // Barra superior
     document.getElementById("lblNome").textContent = usuario.nome;
     document.getElementById("lblMatricula").textContent = usuario.matricula;
 
-    // Tela Identificação
+    // Identificação
     document.getElementById("txtNome").value = usuario.nome;
     document.getElementById("txtMatricula").value = usuario.matricula;
 
-    // Data atual
     document.getElementById("txtData").value =
         new Date().toISOString().split("T")[0];
 
-    // Abre primeira tela
-    mostrarTela("identificacao");
+    // Última tela aberta
+    const ultimaTela =
+        localStorage.getItem("ultimaTela") || "identificacao";
+
+    mostrarTela(ultimaTela);
+
+    // Eventos Gestão
+    [
+        "controleApresentacao",
+        "ausencias",
+        "viras",
+        "postoEscala",
+        "outros"
+    ].forEach(id => {
+
+        document
+            .getElementById(id)
+            .addEventListener("input", calcularTotalGestao);
+
+    });
+
+    calcularTotalGestao();
+
+    // Modal Frota
+    const modal = document.getElementById("modalFrota");
+
+    if (modal) {
+
+        modal.addEventListener("shown.bs.modal", () => {
+
+            const tbody = document.getElementById("tbodyTrens");
+
+            if (tbody.rows.length === 0) {
+
+                carregarTabelaTrens();
+                habilitarColarExcel();
+
+            }
+
+            const primeira =
+                document.querySelector("#tbodyTrens tr:first-child td:nth-child(2)");
+
+            if (primeira) primeira.focus();
+
+        });
+
+    }
+
 };
+// ===================================
+// Troca de telas
+// ===================================
 
 // ===================================
 // Troca de telas
@@ -45,12 +93,14 @@ function mostrarTela(tela) {
 
     telas.forEach(id => {
 
-        document.getElementById(id).style.display =
-            (id === tela) ? "block" : "none";
+        const elemento = document.getElementById(id);
+
+        if (elemento) {
+            elemento.style.display = (id === tela) ? "block" : "none";
+        }
 
     });
 
-    // Atualiza menu lateral
     document.querySelectorAll(".list-group-item").forEach(item => {
         item.classList.remove("active");
     });
@@ -63,10 +113,19 @@ function mostrarTela(tela) {
         historico: "menuHistorico"
     };
 
-    document.getElementById(botoes[tela]).classList.add("active");
-    // Salva a última tela aberta
-localStorage.setItem("ultimaTela", tela);
+    const botao = document.getElementById(botoes[tela]);
+
+    if (botao) {
+        botao.classList.add("active");
+    }
+
+    localStorage.setItem("ultimaTela", tela);
+
 }
+
+// ===================================
+// Iniciar Relatório
+// ===================================
 
 // ===================================
 // Iniciar Relatório
@@ -94,109 +153,83 @@ function iniciarRelatorio() {
     }
 
     const relatorio = {
-
         nome: usuario.nome,
         matricula: usuario.matricula,
-
-        posto,
-        turno,
-        data,
-
+        posto: posto,
+        turno: turno,
+        data: data,
         checklist: [],
         fatos: [],
         locomotivas: [],
         historico: []
-
     };
 
-    localStorage.setItem(
-        "relatorio",
-        JSON.stringify(relatorio)
-    );
+    localStorage.setItem("relatorio", JSON.stringify(relatorio));
 
     mostrarTela("checklist");
+
 }
+// ===================================
+// Frota Equipada
+// ===================================
 
 function carregarTabelaTrens() {
 
     const tbody = document.getElementById("tbodyTrens");
 
+    if (!tbody) return;
+
     tbody.innerHTML = "";
 
     for (let i = 1; i <= 35; i++) {
 
-        tbody.innerHTML += ;
-        <tr>
+        const linha = document.createElement("tr");
 
+        linha.innerHTML = `
             <td class="text-center fw-bold">${i}</td>
-
             <td contenteditable="true" tabindex="0"></td>
-
             <td contenteditable="true" tabindex="0"></td>
-
             <td contenteditable="true" tabindex="0"></td>
+        `;
 
-        </tr>
-        ;
+        tbody.appendChild(linha);
 
     }
 
 }
-
 function habilitarColarExcel() {
 
-    const modal = document.getElementById("modalFrota");
-
-modal.addEventListener("shown.bs.modal", function () {
-
-    const primeiraCelula =
-        document.querySelector("#tbodyTrens tr:first-child td:nth-child(2)");
-
-    if (primeiraCelula) {
-
-        primeiraCelula.focus();
-
-        const range = document.createRange();
-        range.selectNodeContents(primeiraCelula);
-
-        const sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-
-    }
-
-});
-
     const tbody = document.getElementById("tbodyTrens");
+
+    if (!tbody) return;
 
     tbody.addEventListener("paste", function (e) {
 
         e.preventDefault();
 
-        const texto = (e.clipboardData || window.clipboardData).getData("text");
+        const texto =
+            (e.clipboardData || window.clipboardData).getData("text");
 
-        const linhas = texto.split(/\r?\n/);
+        const linhas = texto.trim().split(/\r?\n/);
 
         const linhaInicial = e.target.parentElement.rowIndex - 1;
         const colunaInicial = e.target.cellIndex;
 
         linhas.forEach((linha, i) => {
 
-            if (linha.trim() === "") return;
+            const valores = linha.split("\t");
 
-            const colunas = linha.split("\t");
+            valores.forEach((valor, j) => {
 
-            colunas.forEach((valor, j) => {
+                const tr = tbody.rows[linhaInicial + i];
 
-                const linhaTabela = tbody.rows[linhaInicial + i];
+                if (!tr) return;
 
-                if (!linhaTabela) return;
+                const td = tr.cells[colunaInicial + j];
 
-                const celula = linhaTabela.cells[colunaInicial + j];
+                if (!td) return;
 
-                if (!celula) return;
-
-                celula.innerText = valor;
+                td.innerText = valor;
 
             });
 
@@ -204,17 +237,18 @@ modal.addEventListener("shown.bs.modal", function () {
 
         atualizarQuantidadeFrota();
 
-    });
+    }, { once: true });
 
 }
-
 function atualizarQuantidadeFrota() {
 
-    const linhas = document.querySelectorAll("#tbodyTrens tr");
+    const tbody = document.getElementById("tbodyTrens");
+
+    if (!tbody) return;
 
     let total = 0;
 
-    linhas.forEach(linha => {
+    Array.from(tbody.rows).forEach(linha => {
 
         const tue = linha.cells[1].innerText.trim();
 
@@ -224,17 +258,29 @@ function atualizarQuantidadeFrota() {
 
     });
 
-    document.getElementById("frotaEquipada").value = total;
+    const campo = document.getElementById("frotaEquipada");
+
+    if (campo) {
+        campo.value = total;
+    }
 
 }
+function calcularTotalGestao() {
 
-function calcularTotalGestao(){
+    const controle =
+        Number(document.getElementById("controleApresentacao")?.value) || 0;
 
-    const controle = Number(document.getElementById("controleApresentacao").value) || 0;
-    const ausencias = Number(document.getElementById("ausencias").value) || 0;
-    const viras = Number(document.getElementById("viras").value) || 0;
-    const posto = Number(document.getElementById("postoEscala").value) || 0;
-    const outros = Number(document.getElementById("outros").value) || 0;
+    const ausencias =
+        Number(document.getElementById("ausencias")?.value) || 0;
+
+    const viras =
+        Number(document.getElementById("viras")?.value) || 0;
+
+    const posto =
+        Number(document.getElementById("postoEscala")?.value) || 0;
+
+    const outros =
+        Number(document.getElementById("outros")?.value) || 0;
 
     const total =
         controle -
@@ -243,7 +289,11 @@ function calcularTotalGestao(){
         posto -
         outros;
 
-    document.getElementById("totalGestao").innerText = total;
+    const lblTotal = document.getElementById("totalGestao");
+
+    if (lblTotal) {
+        lblTotal.innerText = total;
+    }
 
 }
 
