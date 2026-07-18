@@ -444,7 +444,7 @@ function salvarLocomotivas() {
             operador2: card.querySelector(".operador2").value,
 
             atendeSA: card.querySelector(".atendeSA").value,
-            infoSA: card.querySelector(".infoSA").value,
+            numeroSA: card.querySelector(".numeroSA").value,
 
             local: card.querySelector(".local").value,
             km: card.querySelector(".km").value,
@@ -543,10 +543,13 @@ function adicionarLocomotiva() {
         <div class="campoSA mt-3" style="display:none">
 
             <label class="form-label">
-                Informações do Atendimento SA
-            </label>
+    Número da SA
+</label>
 
-            <textarea class="form-control infoSA" rows="4"></textarea>
+<input
+    type="text"
+    class="form-control numeroSA"
+    placeholder="Ex.: SA-12345">
 
         </div>
 
