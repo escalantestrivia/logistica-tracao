@@ -328,3 +328,33 @@ function mostrarModalRelatorio() {
     modal.show();
 
 }
+
+function salvarChecklist() {
+
+    const relatorio = JSON.parse(localStorage.getItem("relatorio"));
+
+    relatorio.checklist = {
+
+        controleApresentacao: parseInt(document.getElementById("controleApresentacao").value) || 0,
+
+        frotaEquipada: parseInt(document.getElementById("frotaEquipada").value) || 0,
+
+        ausencias: parseInt(document.getElementById("ausencias").value) || 0,
+
+        viras: parseInt(document.getElementById("viras").value) || 0,
+
+        postoEscala: parseInt(document.getElementById("postoEscala").value) || 0,
+
+        outros: parseInt(document.getElementById("outros").value) || 0,
+
+        totalGestao: document.getElementById("totalGestao").textContent,
+
+        observacoes: document.getElementById("observacoesGestao").value
+
+    };
+
+    localStorage.setItem("relatorio", JSON.stringify(relatorio));
+
+    mostrarTela("fatos");
+
+}
