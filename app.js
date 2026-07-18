@@ -70,10 +70,11 @@ if (modal) {
 
 }
 
+};   // <<< ESTA LINHA ESTÁ FALTANDO
+
 // ================================
 // Gestão de Operadores
 // ================================
-
 function calcularTotalGestao() {
 
     const controle =
@@ -293,46 +294,17 @@ function habilitarColarExcel() {
     });
 
 }
-function atualizarQuantidadeFrota() {
+function limparFrota() {
 
-    const tbody = document.getElementById("tbodyTrens");
+    if (!confirm("Deseja realmente limpar toda a tabela?")) return;
 
-    if (!tbody) return;
+    document.querySelectorAll("#tbodyTrens input").forEach(input => {
 
-    let total = 0;
-
-    Array.from(tbody.rows).forEach(linha => {
-
-        const input = linha.cells[1].querySelector("input");
-
-        if (input && input.value.trim() !== "") {
-            total++;
-        }
+        input.value = "";
 
     });
 
-    const campo = document.getElementById("frotaEquipada");
-
-    if (campo) {
-        campo.value = total;
-    }
+    document.querySelector("#tbodyTrens input")?.focus();
 
 }
-function limparFrota() {
-
-    if (!confirm("Deseja realmente limpar toda a tabela?")) {
-        return;
-    }
-
-    document
-        .querySelectorAll("#tbodyTrens input")
-        .forEach(input => input.value = "");
-
-}
-function finalizarRelatorio() {
-
-    alert("Função em desenvolvimento.");
-
-}
-
 
