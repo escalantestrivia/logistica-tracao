@@ -663,157 +663,463 @@ function adicionarLocomotiva() {
 
 }
 
-async function gerarPDF(){
+async function gerarPDF() {
 
     const { jsPDF } = window.jspdf;
 
-    const pdf = new jsPDF("p","mm","a4");
-
-    let y = 15;
+    const doc = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4"
+    });
 
     const relatorio =
         JSON.parse(localStorage.getItem("relatorio")) || {};
 
-    pdf.setFontSize(18);
-    pdf.text("RELATÓRIO LOGÍSTICA DA TRAÇÃO",105,y,{align:"center"});
+    const largura = doc.internal.pageSize.getWidth();
 
-    y += 12;
+    const data = new Date();
 
-    pdf.setFontSize(12);
+    const dataAtual = data.toLocaleDateString("pt-BR");
+    const horaAtual = data.toLocaleTimeString("pt-BR");
 
-    pdf.text("IDENTIFICAÇÃO",14,y);
+    //==========================
+    // CABEÇALHO
+    //==========================
 
-    y += 8;
+    doc.setFillColor(13,110,253);
+    doc.rect(0,0,210,22,"F");
 
-    if(relatorio.identificacao){
+    doc.setTextColor(255,255,255);
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(18);
 
-        Object.entries(relatorio.identificacao).forEach(([campo,valor])=>{
+    doc.text(
+        "RELATÓRIO LOGÍSTICA DA TRAÇÃO",
+        largura/2,
+        14,
+        {align:"center"}
+    );
 
-            pdf.text(`${campo}: ${valor}`,15,y);
+    doc.setTextColor(0,0,0);
 
-            y += 6;
+    let y = 32;
 
-        });
+    doc.setFontSize(10);
 
-    }
+    doc.text(
+        `Emitido em: ${dataAtual} às ${horaAtual}`,
+        14,
+        y
+    );
 
-    y += 8;
+    y += 10;
+        doc.setFontSize(14);
+    doc.setFont("helvetica","bold");
+    doc.text("IDENTIFICAÇÃO",14,y);
 
-    pdf.text("GESTÃO DE OPERADORES",14,y);
+    y += 5;
 
-    y += 8;
+    doc.autoTable({
 
-    if(relatorio.checklist){
+        startY:y,
 
-        Object.entries(relatorio.checklist).forEach(([campo,valor])=>{
+        theme:"grid",
 
-            pdf.text(`${campo}: ${valor}`,15,y);
+        head:[["Campo","Informação"]],
 
-            y += 6;
+        body:Object.entries(
+            relatorio.identificacao || {}
+        ),
 
-        });
+        styles:{
+            fontSize:10
+        },
 
-    }
+        headStyles:{
+            fillColor:[13,110,253]
+        }
 
-    y += 8;
+    });
 
-    pdf.text("FATOS RELEVANTES",14,y);
+    y = doc.lastAutoTable.finalY + 10;
+        doc.setFont("helvetica","bold");
+    doc.setFontSize(14);
 
-    y += 8;
+    doc.text("GESTÃO DE OPERADORES",14,y);
 
-    if(relatorio.ocorrencias){
+    y += 5;
 
-        relatorio.ocorrencias.forEach((o,i)=>{
+    doc.autoTable({
 
-            pdf.text(`${i+1}. ${o.local}`,15,y);
+        startY:y,
 
-            y +=5;
+        theme:"striped",
 
-            pdf.text(o.descricao,20,y);
+        head:[["Item","Valor"]],
 
-            y +=10;
+        body:Object.entries(
+            relatorio.checklist || {}
+        ),
 
-        });
+        headStyles:{
+            fillColor:[13,110,253]
+        }
 
-    }
+    });
 
-    if(y>240){
+    y = doc.lastAutoTable.finalY + 10;
+    //==========================
+// FROTA EQUIPADA
+//==========================
 
-        pdf.addPage();
+doc.setFont("helvetica","bold");
+doc.setFontSize(14);
+doc.text("FROTA EQUIPADA",14,y);
 
-        y=20;
+y += 5;
 
-    }
+if(relatorio.frota && relatorio.frota.length){
 
-    pdf.text("LOCOMOTIVAS",14,y);
+    doc.autoTable({
 
-    y += 8;
+        startY:y,
 
-    if(relatorio.locomotivas){
+        theme:"striped",
 
-        relatorio.locomotivas.forEach((l,i)=>{
+        head:[[
+            "Série",
+            "Trem",
+            "Operador"
+        ]],
 
-            pdf.setFont(undefined,"bold");
+        body: relatorio.frota.map(item=>[
+            item.serie,
+            item.trem,
+            item.operador
+        ]),
 
-            pdf.text(`LOCOMOTIVA ${i+1}`,14,y);
+        headStyles:{
+            fillColor:[13,110,253]
+        },
 
-            pdf.setFont(undefined,"normal");
+        styles:{
+            fontSize:10
+        }
 
-            y+=6;
+    });
 
-            pdf.text(`Trem: ${l.trem}`,15,y); y+=6;
-            pdf.text(`Operador 1: ${l.operador1}`,15,y); y+=6;
-            pdf.text(`Operador 2: ${l.operador2}`,15,y); y+=6;
+    y = doc.lastAutoTable.finalY + 10;
 
-            pdf.text(`Atende SA: ${l.atendeSA}`,15,y); y+=6;
+}else{
 
-            if(l.atendeSA=="Sim"){
+    doc.setFontSize(10);
+    doc.text("Nenhuma frota cadastrada.",14,y);
 
-                pdf.text(`Número SA: ${l.numeroSA}`,15,y);
-
-                y+=6;
-
-            }
-
-            pdf.text(`Local: ${l.local}`,15,y); y+=6;
-            pdf.text(`KM: ${l.km}`,15,y); y+=6;
-            pdf.text(`Diesel: ${l.diesel}`,15,y); y+=6;
-            pdf.text(`Horímetro: ${l.horimetro}`,15,y); y+=6;
-
-            pdf.text(`Calços: ${l.calcos}`,15,y); y+=6;
-            pdf.text(`Talha: ${l.talha}`,15,y); y+=6;
-            pdf.text(`Kit SOS: ${l.kitSOS}`,15,y); y+=6;
-            pdf.text(`Mangueiras: ${l.mangotes}`,15,y); y+=6;
-            pdf.text(`Chaves: ${l.chaves}`,15,y); y+=6;
-            pdf.text(`Ferramentas: ${l.ferramentas}`,15,y); y+=6;
-            pdf.text(`Adaptador: ${l.adaptador}`,15,y); y+=6;
-            pdf.text(`Níveis: ${l.niveis}`,15,y); y+=6;
-
-            pdf.text("Observações:",15,y);
-
-            y+=6;
-
-            const texto = pdf.splitTextToSize(
-                l.observacoesGerais || "",
-                170
-            );
-
-            pdf.text(texto,20,y);
-
-            y += texto.length*6 + 10;
-
-            if(y>250){
-
-                pdf.addPage();
-
-                y=20;
-
-            }
-
-        });
-
-    }
-
-    pdf.save("Relatorio_Logistica_Tracao.pdf");
+    y += 10;
 
 }
+    //==========================
+// FATOS RELEVANTES
+//==========================
+
+doc.setFont("helvetica","bold");
+doc.setFontSize(14);
+
+doc.text("FATOS RELEVANTES",14,y);
+
+y += 8;
+
+if(relatorio.ocorrencias && relatorio.ocorrencias.length){
+
+    relatorio.ocorrencias.forEach((ocorrencia,index)=>{
+
+        if(y>240){
+
+            doc.addPage();
+            y=20;
+
+        }
+
+        doc.setDrawColor(180);
+
+        doc.roundedRect(
+            12,
+            y-4,
+            186,
+            28,
+            2,
+            2
+        );
+
+        doc.setFontSize(11);
+        doc.setFont("helvetica","bold");
+
+        doc.text(
+            "Ocorrência " + (index+1),
+            16,
+            y+2
+        );
+
+        doc.setFont("helvetica","normal");
+
+        doc.text(
+            "Local: " + ocorrencia.local,
+            16,
+            y+9
+        );
+
+        const texto = doc.splitTextToSize(
+            ocorrencia.descricao || "",
+            170
+        );
+
+        doc.text(
+            texto,
+            16,
+            y+16
+        );
+
+        y += 35;
+
+    });
+
+}else{
+
+    doc.setFontSize(10);
+    doc.text("Nenhuma ocorrência registrada.",14,y);
+
+    y += 10;
+
+}
+    //==========================
+// LOCOMOTIVAS
+//==========================
+
+doc.setFont("helvetica","bold");
+doc.setFontSize(14);
+doc.text("LOCOMOTIVAS", 14, y);
+
+y += 8;
+
+if (relatorio.locomotivas && relatorio.locomotivas.length) {
+
+    relatorio.locomotivas.forEach((loc, index) => {
+
+        // Altura aproximada de cada ficha
+        if (y > 170) {
+            doc.addPage();
+            y = 20;
+        }
+
+        // Moldura
+        doc.setDrawColor(120);
+        doc.roundedRect(12, y - 4, 186, 78, 2, 2);
+
+        doc.setFillColor(13,110,253);
+        doc.rect(12, y - 4, 186, 8, "F");
+
+        doc.setTextColor(255,255,255);
+        doc.setFont("helvetica","bold");
+        doc.setFontSize(12);
+
+        doc.text(`LOCOMOTIVA ${index + 1}`, 16, y + 1);
+
+        doc.setTextColor(0,0,0);
+        doc.setFont("helvetica","normal");
+        doc.setFontSize(10);
+
+        let yy = y + 10;
+
+        doc.text(`Trem: ${loc.trem || ""}`,16,yy);
+        doc.text(`Local: ${loc.local || ""}`,110,yy);
+
+        yy += 6;
+
+        doc.text(`Operador 1: ${loc.operador1 || ""}`,16,yy);
+
+        yy += 6;
+
+        doc.text(`Operador 2: ${loc.operador2 || ""}`,16,yy);
+
+        yy += 6;
+
+        doc.text(`Atendendo SA: ${loc.atendeSA || ""}`,16,yy);
+
+        if(loc.atendeSA==="Sim"){
+            doc.text(`Nº SA: ${loc.numeroSA || ""}`,110,yy);
+        }
+
+        yy += 6;
+
+        doc.text(`KM: ${loc.km || ""}`,16,yy);
+        doc.text(`Diesel: ${loc.diesel || ""}`,70,yy);
+        doc.text(`Horímetro: ${loc.horimetro || ""}`,130,yy);
+
+        yy += 8;
+
+        doc.autoTable({
+
+            startY: yy,
+
+            theme: "grid",
+
+            margin:{left:16,right:16},
+
+            head:[[
+                "Calços",
+                "Talha",
+                "Kit SOS",
+                "Mangueiras",
+                "Chaves",
+                "Ferramentas",
+                "Adaptador",
+                "Níveis"
+            ]],
+
+            body:[[
+                loc.calcos || "",
+                loc.talha || "",
+                loc.kitSOS || "",
+                loc.mangotes || "",
+                loc.chaves || "",
+                loc.ferramentas || "",
+                loc.adaptador || "",
+                loc.niveis || ""
+            ]],
+
+            styles:{
+                halign:"center",
+                fontSize:8
+            },
+
+            headStyles:{
+                fillColor:[13,110,253]
+            }
+
+        });
+
+        yy = doc.lastAutoTable.finalY + 6;
+
+        doc.setFont("helvetica","bold");
+        doc.text("Observações Gerais",16,yy);
+
+        yy += 5;
+
+        doc.setFont("helvetica","normal");
+
+        const obs = doc.splitTextToSize(
+            loc.observacoesGerais || "Sem observações.",
+            170
+        );
+
+        doc.text(obs,16,yy);
+
+        y = yy + (obs.length * 5) + 15;
+
+    });
+
+}else{
+
+    doc.setFontSize(10);
+    doc.text("Nenhuma locomotiva cadastrada.",14,y);
+
+    y += 10;
+
+}
+    //==========================
+// RODAPÉ
+//==========================
+
+const paginas = doc.getNumberOfPages();
+
+for(let i=1;i<=paginas;i++){
+
+    doc.setPage(i);
+
+    doc.setDrawColor(180);
+    doc.line(10,290,200,290);
+
+    doc.setFontSize(9);
+
+    doc.text(
+        "Logística da Tração",
+        14,
+        295
+    );
+
+    doc.text(
+        `Página ${i} de ${paginas}`,
+        105,
+        295,
+        {align:"center"}
+    );
+
+    doc.text(
+        dataAtual + " " + horaAtual,
+        196,
+        295,
+        {align:"right"}
+    );
+
+}
+
+//==========================
+// RODAPÉ
+//==========================
+
+const paginas = doc.getNumberOfPages();
+
+for(let i=1;i<=paginas;i++){
+
+    doc.setPage(i);
+
+    doc.setDrawColor(180);
+    doc.line(10,290,200,290);
+
+    doc.setFontSize(9);
+
+    doc.text(
+        "Logística da Tração",
+        14,
+        295
+    );
+
+    doc.text(
+        `Página ${i} de ${paginas}`,
+        105,
+        295,
+        {align:"center"}
+    );
+
+    doc.text(
+        dataAtual + " " + horaAtual,
+        196,
+        295,
+        {align:"right"}
+    );
+
+}
+
+// Obtém os dados da identificação
+const identificacao = relatorio.identificacao || {};
+
+// Data do relatório
+const dataRelatorio =
+    identificacao.data ||
+    dataAtual;
+
+// Formata a data para AAAA-MM-DD
+const dataFormatada = dataRelatorio
+    .replace(/\//g, "-");
+
+// Turno informado
+const turno =
+    (identificacao.turno || "Sem_Turno")
+    .replace(/\s+/g, "_");
+
+// Nome do arquivo
+const nomeArquivo =
+    `Relatorio Escala - ${dataFormatada} - ${turno}.pdf`;
+
+doc.save(nomeArquivo);
