@@ -6,7 +6,7 @@
 
 // Login
 const usuario = JSON.parse(localStorage.getItem("usuario"));
-
+let relatorioIniciado = false;
 
 if (!usuario) {
     window.location.href = "login.html";
@@ -17,6 +17,8 @@ if (!usuario) {
 // ================================
 
 window.onload = function () {
+
+    relatorioIniciado = false;
 
     // Barra superior
     document.getElementById("lblNome").textContent = usuario.nome;
@@ -33,9 +35,6 @@ window.onload = function () {
     document.getElementById("menuFatos").classList.add("bloqueado");
     document.getElementById("menuLocomotivas").classList.add("bloqueado");
     document.getElementById("menuHistorico").classList.add("bloqueado");
-
-    // Abre a tela de identificação
-    mostrarTela("identificacao");
 
     // Eventos Gestão de Operadores
     [
@@ -56,10 +55,12 @@ window.onload = function () {
 
     });
 
+    calcularTotalGestao();
+
+    // Exibe a tela inicial
+    mostrarTela("identificacao");
+
 };
-
-calcularTotalGestao();
-
     // Modal Frota
    const modal = document.getElementById("modalFrota");
 
@@ -111,33 +112,13 @@ function calcularTotalGestao() {
 
 function mostrarTela(tela) {
 
-    const bloqueados = {
-    checklist: "menuChecklist",
-    fatos: "menuFatos",
-    locomotivas: "menuLocomotivas",
-    historico: "menuHistorico"
-};
-
-function mostrarTela(tela) {
-
-    const bloqueados = {
-        checklist: "menuChecklist",
-        fatos: "menuFatos",
-        locomotivas: "menuLocomotivas",
-        historico: "menuHistorico"
-    };
-
-    // Verifica se o menu está bloqueado
-    if (bloqueados[tela]) {
-
-        const botao = document.getElementById(bloqueados[tela]);
-
-        if (botao && botao.classList.contains("bloqueado")) {
-            mostrarModalRelatorio();
-            return;
-        }
+    if (
+        !relatorioIniciado &&
+        tela !== "identificacao"
+    ) {
+        mostrarModalRelatorio();
+        return;
     }
-
     const telas = [
         "identificacao",
         "checklist",
@@ -188,6 +169,8 @@ function mostrarTela(tela) {
 
 function iniciarRelatorio() {
 
+    
+
     const posto = document.getElementById("cmbPosto").value;
     const turno = document.getElementById("cmbTurno").value;
     const data = document.getElementById("txtData").value;
@@ -221,14 +204,9 @@ function iniciarRelatorio() {
 
     localStorage.setItem("relatorio", JSON.stringify(relatorio));
 
-
-document.getElementById("menuChecklist").classList.remove("bloqueado");
-document.getElementById("menuFatos").classList.remove("bloqueado");
-document.getElementById("menuLocomotivas").classList.remove("bloqueado");
-document.getElementById("menuHistorico").classList.remove("bloqueado");
+relatorioIniciado = true;
 
 mostrarTela("checklist");
-
 }
 // ===================================
 // Frota Equipada
@@ -242,7 +220,6 @@ function carregarTabelaTrens() {
     if (!tbody) return;
 
     tbody.innerHTML = "";
-
     for (let i = 1; i <= 35; i++) {
 
         const tr = document.createElement("tr");
