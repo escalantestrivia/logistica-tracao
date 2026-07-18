@@ -1,0 +1,202 @@
+:root{
+
+    --azul:#0d6efd;
+    --azul-escuro:#0b5ed7;
+    --cinza:#f4f6f9;
+    --branco:#ffffff;
+    --borda:#d9d9d9;
+    --verde:#198754;
+    --vermelho:#dc3545;
+    --amarelo:#ffc107;
+
+}
+
+body{
+
+    background:var(--cinza);
+    font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;
+    overflow-x:hidden;
+
+}
+
+.navbar{
+
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+
+}
+
+.navbar-brand{
+
+    font-size:24px;
+    font-weight:700;
+    letter-spacing:.5px;
+
+}
+
+.container-fluid{
+
+    padding:20px;
+
+}
+
+.card{
+
+    border:none;
+    border-radius:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.10);
+
+}
+
+.card-header{
+
+    font-weight:700;
+
+}
+
+.form-label{
+
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:3px;
+
+}
+
+.form-control,
+.form-select{
+
+    height:38px;
+
+}
+
+.nav-tabs{
+
+    margin-top:10px;
+
+}
+
+.nav-tabs .nav-link{
+
+    color:#555;
+    font-weight:600;
+
+}
+
+.nav-tabs .nav-link.active{
+
+    background:var(--azul);
+    color:white;
+
+}
+
+.aba{
+
+    background:white;
+    padding:20px;
+    border-radius:0 0 10px 10px;
+    min-height:650px;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+
+}
+
+.table{
+
+    font-size:14px;
+
+}
+
+.table thead{
+
+    background:var(--azul);
+    color:white;
+
+}
+
+.table td{
+
+    vertical-align:middle;
+
+}
+
+.btn{
+
+    border-radius:8px;
+
+}
+
+.btn-primary{
+
+    background:var(--azul);
+
+}
+
+.btn-success{
+
+    background:var(--verde);
+
+}
+
+.btn-danger{
+
+    background:var(--vermelho);
+
+}
+
+.btn-warning{
+
+    background:var(--amarelo);
+
+}
+
+input[readonly]{
+
+    background:#eef1f5;
+
+}
+
+#gestao{
+
+    font-size:22px;
+    font-weight:700;
+    text-align:center;
+    background:#ffe08a;
+
+}
+
+.login-card{
+
+    margin-top:8%;
+
+}
+
+.logo{
+
+    width:90px;
+    margin:auto;
+    display:block;
+
+}
+
+footer{
+
+    margin-top:20px;
+    text-align:center;
+    color:#777;
+    font-size:13px;
+
+}
+
+@media(max-width:992px){
+
+    .container-fluid{
+
+        padding:10px;
+
+    }
+
+    .aba{
+
+        padding:12px;
+
+    }
+
+}
