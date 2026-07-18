@@ -78,13 +78,8 @@ if (modal) {
 
     });
 
-}
-
 };   // <<< ESTA LINHA ESTÁ FALTANDO
 
-// ================================
-// Gestão de Operadores
-// ================================
 function calcularTotalGestao() {
 
     const controle = parseInt(document.getElementById("controleApresentacao")?.value, 10) || 0;
