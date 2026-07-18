@@ -64,6 +64,8 @@ function mostrarTela(tela) {
     };
 
     document.getElementById(botoes[tela]).classList.add("active");
+    // Salva a última tela aberta
+localStorage.setItem("ultimaTela", tela);
 }
 
 // ===================================
