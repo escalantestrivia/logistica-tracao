@@ -34,22 +34,24 @@ window.onload = function () {
 
     // Eventos Gestão de Operadores
     [
-        "controleApresentacao",
-        "ausencias",
-        "viras",
-        "postoEscala",
-        "outros"
-    ].forEach(id => {
+    "controleApresentacao",
+    "frotaEquipada",
+    "ausencias",
+    "viras",
+    "postoEscala",
+    "outros"
+].forEach(id => {
 
-        const campo = document.getElementById(id);
+    const campo = document.getElementById(id);
 
-        if (campo) {
-            campo.addEventListener("input", calcularTotalGestao);
-        }
+    if (campo) {
+        campo.addEventListener("input", calcularTotalGestao);
+        campo.addEventListener("change", calcularTotalGestao);
+    }
 
-    });
+});
 
-    calcularTotalGestao();
+calcularTotalGestao();
 
     // Modal Frota
    const modal = document.getElementById("modalFrota");
@@ -77,28 +79,25 @@ if (modal) {
 // ================================
 function calcularTotalGestao() {
 
-    const controle =
-        Number(document.getElementById("controleApresentacao")?.value) || 0;
-
-    const ausencias =
-        Number(document.getElementById("ausencias")?.value) || 0;
-
-    const viras =
-        Number(document.getElementById("viras")?.value) || 0;
-
-    const posto =
-        Number(document.getElementById("postoEscala")?.value) || 0;
-
-    const outros =
-        Number(document.getElementById("outros")?.value) || 0;
+    const controle = parseInt(document.getElementById("controleApresentacao")?.value, 10) || 0;
+    const frota = parseInt(document.getElementById("frotaEquipada")?.value, 10) || 0;
+    const ausencias = parseInt(document.getElementById("ausencias")?.value, 10) || 0;
+    const viras = parseInt(document.getElementById("viras")?.value, 10) || 0;
+    const postoEscala = parseInt(document.getElementById("postoEscala")?.value, 10) || 0;
+    const outros = parseInt(document.getElementById("outros")?.value, 10) || 0;
 
     const total =
-        controle - ausencias - viras - posto - outros;
+        controle
+        - frota
+        - ausencias
+        - viras
+        - postoEscala
+        - outros;
 
-    const campoTotal = document.getElementById("totalGestao");
+    const lblTotal = document.getElementById("totalGestao");
 
-    if (campoTotal) {
-        campoTotal.textContent = total;
+    if (lblTotal) {
+        lblTotal.textContent = total;
     }
 
 }
