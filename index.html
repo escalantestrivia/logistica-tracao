@@ -1,5 +1,16 @@
 <!DOCTYPE html>
 
+#btnFinalizarRelatorio{
+    color: #000;
+    font-weight: 600;
+}
+
+#btnFinalizarRelatorio:hover{
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+}
+
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8"/>
@@ -61,30 +72,47 @@
 <div class="row">
 <div class="col-md-3">
 <div class="list-group">
-<button class="list-group-item list-group-item-action active" id="menuIdentificacao" onclick="mostrarTela('identificacao')">
-                    Identificação
-                </button>
-<button id="menuChecklist" class="list-group-item list-group-item-action bloqueado"
-    onclick="mostrarTela('checklist')">
-    Check List
-</button>
+<div class="list-group">
 
-<button id="menuFatos" class="list-group-item list-group-item-action bloqueado"
-    onclick="mostrarTela('fatos')">
-    Fatos Relevantes
-</button>
+    <button class="list-group-item list-group-item-action active"
+            id="menuIdentificacao"
+            onclick="mostrarTela('identificacao')">
+        Identificação
+    </button>
 
-<button id="menuLocomotivas" class="list-group-item list-group-item-action bloqueado"
-    onclick="mostrarTela('locomotivas')">
-    Locomotivas
-</button>
+    <button class="list-group-item list-group-item-action"
+            id="menuChecklist"
+            onclick="mostrarTela('checklist')">
+        Check List
+    </button>
 
-<button id="menuHistorico" class="list-group-item list-group-item-action bloqueado"
-    onclick="mostrarTela('historico')">
-    Histórico
-</button>
-                    Finalizar Relatório
-                </button>
+    <button class="list-group-item list-group-item-action"
+            id="menuFatos"
+            onclick="mostrarTela('fatos')">
+        Fatos Relevantes
+    </button>
+
+    <button class="list-group-item list-group-item-action"
+            id="menuLocomotivas"
+            onclick="mostrarTela('locomotivas')">
+        Locomotivas
+    </button>
+
+    <button class="list-group-item list-group-item-action"
+            id="menuHistorico"
+            onclick="mostrarTela('historico')">
+        Histórico
+    </button>
+
+</div>
+
+<div class="d-grid mt-3">
+    <button id="btnFinalizarRelatorio"
+            class="btn btn-outline-danger"
+            onclick="finalizarRelatorio()">
+        Finalizar Relatório
+    </button>
+</div>
 </div>
 </div>
 <div class="col-md-9">
