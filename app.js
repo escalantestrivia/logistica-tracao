@@ -10,7 +10,10 @@ if (!usuario) {
     window.location.href = "login.html";
 }
 
+// ================================
 // Inicialização
+// ================================
+
 window.onload = function () {
 
     // Barra superior
@@ -20,17 +23,16 @@ window.onload = function () {
     // Identificação
     document.getElementById("txtNome").value = usuario.nome;
     document.getElementById("txtMatricula").value = usuario.matricula;
-
     document.getElementById("txtData").value =
         new Date().toISOString().split("T")[0];
 
-    // Última tela aberta
+    // Última tela
     const ultimaTela =
         localStorage.getItem("ultimaTela") || "identificacao";
 
     mostrarTela(ultimaTela);
 
-    // Eventos Gestão
+    // Eventos Gestão de Operadores
     [
         "controleApresentacao",
         "ausencias",
@@ -39,44 +41,69 @@ window.onload = function () {
         "outros"
     ].forEach(id => {
 
-        document
-            .getElementById(id)
-            .addEventListener("input", calcularTotalGestao);
+        const campo = document.getElementById(id);
+
+        if (campo) {
+            campo.addEventListener("input", calcularTotalGestao);
+        }
 
     });
 
     calcularTotalGestao();
 
+    // Modal Frota
+    const modal = document.getElementById("modalFrota");
 
+    if (modal) {
 
-};   // <-- ESTA CHAVE E PONTO E VÍRGULA ESTÃO FALTANDO
+        modal.addEventListener("shown.bs.modal", () => {
 
+            const tbody = document.getElementById("tbodyTrens");
 
+            if (tbody && tbody.rows.length === 0) {
+
+                carregarTabelaTrens();
+                habilitarColarExcel();
+
+            }
+
+        });
+
+    }
+
+};
+
+// ================================
+// Gestão de Operadores
+// ================================
 
 function calcularTotalGestao() {
 
-    const controle = Number(document.getElementById("controleApresentacao").value) || 0;
-    const ausencias = Number(document.getElementById("ausencias").value) || 0;
-    const viras = Number(document.getElementById("viras").value) || 0;
-    const posto = Number(document.getElementById("postoEscala").value) || 0;
-    const outros = Number(document.getElementById("outros").value) || 0;
+    const controle =
+        Number(document.getElementById("controleApresentacao")?.value) || 0;
 
-    const total = controle - ausencias - viras - posto - outros;
+    const ausencias =
+        Number(document.getElementById("ausencias")?.value) || 0;
 
-    document.getElementById("totalGestao").textContent = total;
+    const viras =
+        Number(document.getElementById("viras")?.value) || 0;
+
+    const posto =
+        Number(document.getElementById("postoEscala")?.value) || 0;
+
+    const outros =
+        Number(document.getElementById("outros")?.value) || 0;
+
+    const total =
+        controle - ausencias - viras - posto - outros;
+
+    const campoTotal = document.getElementById("totalGestao");
+
+    if (campoTotal) {
+        campoTotal.textContent = total;
+    }
 
 }
-
-calcularTotalGestao();
-
-}; // FECHA O window.onload
-// ===================================
-// Troca de telas
-// ===================================
-
-// ===================================
-// Troca de telas
-// ===================================
 
 function mostrarTela(tela) {
 
