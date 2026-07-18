@@ -324,6 +324,28 @@ calcularTotalGestao();
 // Finalizar
 // ===================================
 
+function limparFrota() {
+
+    if (!confirm("Deseja realmente limpar toda a Frota Equipada?")) {
+        return;
+    }
+
+    const tbody = document.getElementById("tbodyTrens");
+
+    if (!tbody) return;
+
+    Array.from(tbody.rows).forEach(linha => {
+
+        linha.cells[1].innerText = "";
+        linha.cells[2].innerText = "";
+        linha.cells[3].innerText = "";
+
+    });
+
+    document.getElementById("frotaEquipada").value = 0;
+
+}
+
 function finalizarRelatorio() {
 
     alert("Função em desenvolvimento.");
