@@ -124,17 +124,17 @@ function carregarTabelaTrens() {
     for (let i = 1; i <= 35; i++) {
 
         tbody.innerHTML += `
-            <tr>
+        <tr>
 
-                <td class="text-center fw-bold">${i}</td>
+            <td class="text-center fw-bold">${i}</td>
 
-                <td contenteditable="true"></td>
+            <td contenteditable="true" tabindex="0"></td>
 
-                <td contenteditable="true"></td>
+            <td contenteditable="true" tabindex="0"></td>
 
-                <td contenteditable="true"></td>
+            <td contenteditable="true" tabindex="0"></td>
 
-            </tr>
+        </tr>
         `;
 
     }
