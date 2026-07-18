@@ -8,6 +8,7 @@
 const usuario = JSON.parse(localStorage.getItem("usuario"));
 let relatorioIniciado = false;
 let numeroOcorrencia = 0;
+let numeroLocomotiva = 0;
 
 if (!usuario) {
     window.location.href = "login.html";
@@ -420,5 +421,145 @@ function adicionarOcorrencia() {
 function salvarFatos() {
 
     mostrarTela("locomotivas");
+
+}
+
+function adicionarLocomotiva() {
+
+    numeroLocomotiva++;
+
+    const container = document.getElementById("listaLocomotivas");
+
+    container.insertAdjacentHTML("beforeend", `
+
+<div class="card mt-3">
+
+    <div class="card-header bg-light">
+
+        <strong>Locomotiva ${numeroLocomotiva}</strong>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row g-3">
+
+            <div class="col-md-3">
+                <label class="form-label">Trem</label>
+                <input type="text" class="form-control trem">
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label">Operador 1</label>
+                <input type="text" class="form-control operador1">
+            </div>
+
+            <div class="col-md-5">
+                <label class="form-label">Operador 2</label>
+                <input type="text" class="form-control operador2">
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="row g-3">
+
+            <div class="col-md-3">
+
+                <label class="form-label">
+                    Atendendo SA
+                </label>
+
+                <select
+                    class="form-select atendeSA"
+                    onchange="toggleSA(this)">
+
+                    <option value="Não">Não</option>
+                    <option value="Sim">Sim</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div
+            class="mt-3 campoSA"
+            style="display:none;">
+
+            <label class="form-label">
+                Informações do Atendimento SA
+            </label>
+
+            <textarea
+                class="form-control infoSA"
+                rows="4"></textarea>
+
+        </div>
+
+        <hr>
+
+        <div class="row g-3">
+
+            <div class="col-md-3">
+
+                <label class="form-label">Local</label>
+
+                <input
+                    type="text"
+                    class="form-control local">
+
+            </div>
+
+            <div class="col-md-2">
+
+                <label class="form-label">KM</label>
+
+                <input
+                    type="number"
+                    class="form-control km">
+
+            </div>
+
+            <div class="col-md-2">
+
+                <label class="form-label">Diesel</label>
+
+                <input
+                    type="number"
+                    class="form-control diesel">
+
+            </div>
+
+            <div class="col-md-2">
+
+                <label class="form-label">Horímetro</label>
+
+                <input
+                    type="number"
+                    class="form-control horimetro">
+
+            </div>
+
+            <div class="col-md-3">
+
+                <label class="form-label">
+                    Qtde. Calços
+                </label>
+
+                <input
+                    type="number"
+                    class="form-control calcos">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+`);
 
 }
