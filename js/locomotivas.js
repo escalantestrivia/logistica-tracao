@@ -145,7 +145,7 @@ banco[chave].locomotivas[locomotivaEditando]=loco;
 
 }
 
-salvarBanco();
+atualizarAlteracao();
 
 modalLocomotiva.hide();
 
@@ -179,7 +179,7 @@ const chave=obterChave();
 
 banco[chave].locomotivas.splice(i,1);
 
-salvarBanco();
+atualizarAlteracao();
 
 renderLocomotivas();
 
