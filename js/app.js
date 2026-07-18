@@ -1,60 +1,209 @@
-// Verifica se existe um usuário logado
-const usuario = JSON.parse(localStorage.getItem("usuario"));
+//==================================================
+// LOGÍSTICA DA TRAÇÃO
+// app.js
+//==================================================
 
-if (!usuario) {
+// Usuário logado
+let usuario = null;
+
+//==================================================
+// Inicialização
+//==================================================
+
+document.addEventListener("DOMContentLoaded", iniciarSistema);
+
+function iniciarSistema() {
+
+    verificarLogin();
+
+    carregarUsuario();
+
+    mostrarTela("identificacao");
+
+}
+
+//==================================================
+// Login
+//==================================================
+
+function verificarLogin() {
+
+    usuario = JSON.parse(localStorage.getItem("usuario"));
+
+    if (!usuario) {
+
+        window.location.href = "login.html";
+
+    }
+
+}
+
+function carregarUsuario() {
+
+    // Navbar
+    document.getElementById("lblNome").textContent = usuario.nome;
+    document.getElementById("lblMatricula").textContent = usuario.matricula;
+
+    // Identificação
+    document.getElementById("txtNome").value = usuario.nome;
+    document.getElementById("txtMatricula").value = usuario.matricula;
+
+}
+
+function logout() {
+
+    localStorage.removeItem("usuario");
+
     window.location.href = "login.html";
-}
-
-// Preenche o cabeçalho
-document.getElementById("lblNome").textContent = usuario.nome;
-document.getElementById("lblMatricula").textContent = usuario.matricula;
-
-// Preenche a tela Identificação
-document.getElementById("txtNome").value = usuario.nome;
-document.getElementById("txtMatricula").value = usuario.matricula;
-
-document.getElementById("lblNome").innerHTML = usuario.nome;
-
-document.getElementById("lblMatricula").innerHTML = usuario.matricula;
-
-function mostrarTela(nome) {
-
-    document.querySelectorAll("#identificacao,#checklist,#fatos,#locomotivas,#historico")
-
-        .forEach(div => div.style.display = "none");
-
-    document.getElementById(nome).style.display = "block";
-
-}const usuario = JSON.parse(localStorage.getItem("usuario"));
-
-if (!usuario) {
-
-    location.href = "login.html";
 
 }
 
-document.getElementById("lblNome").innerHTML = usuario.nome;
+//==================================================
+// Navegação
+//==================================================
 
-document.getElementById("lblMatricula").innerHTML = usuario.matricula;
+function mostrarTela(tela) {
 
-function mostrarTela(nome) {
+    const telas = [
 
-    document.querySelectorAll("#identificacao,#checklist,#fatos,#locomotivas,#historico")
+        "identificacao",
+        "checklist",
+        "fatos",
+        "locomotivas",
+        "historico"
 
-        .forEach(div => div.style.display = "none");
+    ];
 
-    document.getElementById(nome).style.display = "block";
+    telas.forEach(nome => {
+
+        const div = document.getElementById(nome);
+
+        if (div) {
+
+            div.style.display = "none";
+
+        }
+
+    });
+
+    const atual = document.getElementById(tela);
+
+    if (atual) {
+
+        atual.style.display = "block";
+
+    }
+
+    atualizarMenu(tela);
 
 }
 
-document.getElementById("txtNome").value = usuario.nome;
-document.getElementById("txtMatricula").value = usuario.matricula;
+function atualizarMenu(tela) {
 
-document.getElementById("lblNome").textContent = usuario.nome;
-document.getElementById("lblMatricula").textContent = usuario.matricula;
+    const botoes = [
 
-function iniciarRelatorio(){
+        "menuIdentificacao",
+        "menuChecklist",
+        "menuFatos",
+        "menuLocomotivas",
+        "menuHistorico"
 
-    alert("Relatório iniciado.");
+    ];
+
+    botoes.forEach(botao => {
+
+        const item = document.getElementById(botao);
+
+        if (item) {
+
+            item.classList.remove("active");
+
+        }
+
+    });
+
+    switch (tela) {
+
+        case "identificacao":
+            document.getElementById("menuIdentificacao").classList.add("active");
+            break;
+
+        case "checklist":
+            document.getElementById("menuChecklist").classList.add("active");
+            break;
+
+        case "fatos":
+            document.getElementById("menuFatos").classList.add("active");
+            break;
+
+        case "locomotivas":
+            document.getElementById("menuLocomotivas").classList.add("active");
+            break;
+
+        case "historico":
+            document.getElementById("menuHistorico").classList.add("active");
+            break;
+
+    }
+
+}
+
+//==================================================
+// Identificação
+//==================================================
+
+function iniciarRelatorio() {
+
+    const posto = document.getElementById("cmbPosto").value;
+    const turno = document.getElementById("cmbTurno").value;
+    const data = document.getElementById("txtData").value;
+
+    if (posto === "") {
+
+        alert("Selecione o posto.");
+
+        return;
+
+    }
+
+    if (turno === "") {
+
+        alert("Selecione o turno.");
+
+        return;
+
+    }
+
+    if (data === "") {
+
+        alert("Informe a data.");
+
+        return;
+
+    }
+
+    const relatorio = {
+
+        nome: usuario.nome,
+        matricula: usuario.matricula,
+        posto,
+        turno,
+        data
+
+    };
+
+    localStorage.setItem("relatorio", JSON.stringify(relatorio));
+
+    mostrarTela("checklist");
+
+}
+
+//==================================================
+// PDF
+//==================================================
+
+function finalizarRelatorio() {
+
+    alert("Módulo PDF será implementado posteriormente.");
 
 }
