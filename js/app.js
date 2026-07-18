@@ -116,8 +116,7 @@ function carregarDia(){
 
     }
 
-    if(typeof carregarChecklist==="function")
-        carregarChecklist();
+    montarChecklist();
 
     if(typeof renderFatos==="function")
         renderFatos();
