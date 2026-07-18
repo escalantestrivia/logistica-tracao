@@ -360,17 +360,21 @@ function salvarChecklist() {
 
 }
 
+let numeroOcorrencia = 0;
+
 function adicionarOcorrencia() {
 
     numeroOcorrencia++;
 
     const posto = document.getElementById("cmbPosto").value;
 
-    document.getElementById("listaOcorrencias").insertAdjacentHTML("beforeend", `
+    const container = document.getElementById("listaOcorrencias");
 
-        <div class="card mb-3">
+    container.insertAdjacentHTML("beforeend", `
 
-            <div class="card-header">
+        <div class="card mt-3">
+
+            <div class="card-header bg-light">
 
                 <strong>${numeroOcorrencia}ª Ocorrência</strong>
 
@@ -378,19 +382,23 @@ function adicionarOcorrencia() {
 
             <div class="card-body">
 
-                <div class="mb-3">
+                <div class="row">
 
-                    <label class="form-label">Local</label>
+                    <div class="col-md-3">
 
-                    <input
-                        type="text"
-                        class="form-control localOcorrencia"
-                        value="${posto}"
-                        readonly>
+                        <label class="form-label">Local</label>
+
+                        <input
+                            type="text"
+                            class="form-control localOcorrencia"
+                            value="${posto}"
+                            readonly>
+
+                    </div>
 
                 </div>
 
-                <div>
+                <div class="mt-3">
 
                     <label class="form-label">Descrição</label>
 
@@ -410,26 +418,6 @@ function adicionarOcorrencia() {
 }
 
 function salvarFatos() {
-
-    const relatorio = JSON.parse(localStorage.getItem("relatorio"));
-
-    relatorio.fatos = [];
-
-    document.querySelectorAll("#listaOcorrencias .card").forEach(card => {
-
-        relatorio.fatos.push({
-
-            ocorrencia: card.querySelector(".card-header strong").textContent,
-
-            local: card.querySelector(".localOcorrencia").value,
-
-            descricao: card.querySelector(".descricaoOcorrencia").value
-
-        });
-
-    });
-
-    localStorage.setItem("relatorio", JSON.stringify(relatorio));
 
     mostrarTela("locomotivas");
 
