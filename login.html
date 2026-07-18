@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Login - Logística da Tração</title>
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body class="bg-light">
+
+<div class="container">
+
+<div class="row justify-content-center mt-5">
+
+<div class="col-lg-4">
+
+<div class="card shadow">
+
+<div class="card-header bg-primary text-white text-center">
+
+<h4>LOGÍSTICA DA TRAÇÃO</h4>
+
+</div>
+
+<div class="card-body">
+
+<div class="mb-3">
+
+<label>Matrícula</label>
+
+<input
+type="text"
+id="matricula"
+class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Senha</label>
+
+<input
+type="password"
+id="senha"
+class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Local</label>
+
+<select
+id="local"
+class="form-select">
+
+<option value="SUZ">SUZ</option>
+
+<option value="BAS">BAS</option>
+
+</select>
+
+</div>
+
+<div class="mb-3">
+
+<label>Turno</label>
+
+<select
+id="turno"
+class="form-select">
+
+<option>Manhã</option>
+
+<option>Tarde</option>
+
+<option>Noite</option>
+
+</select>
+
+</div>
+
+<div class="d-grid">
+
+<button
+class="btn btn-primary"
+onclick="login()">
+
+Entrar
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="js/usuarios.js"></script>
+<script src="js/login.js"></script>
+
+</body>
+
+</html>
