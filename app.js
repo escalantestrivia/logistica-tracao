@@ -233,6 +233,8 @@ function carregarTabelaTrens() {
         `;
 
         tbody.appendChild(tr);
+        tr.querySelectorAll("input").forEach(input => {
+});
 
     }
 
@@ -243,49 +245,49 @@ function habilitarColarExcel() {
 
     if (!tbody) return;
 
-    // Evita registrar o evento mais de uma vez
-    tbody.onpaste = function (e) {
+    tbody.querySelectorAll("input").forEach(input => {
 
-        e.preventDefault();
+        input.addEventListener("paste", function (e) {
 
-        const texto = (e.clipboardData || window.clipboardData).getData("text");
+            e.preventDefault();
 
-        const linhas = texto.trim().split(/\r?\n/);
+            const texto = (e.clipboardData || window.clipboardData).getData("text");
 
-        const divInicial = e.target.closest(".celula");
+            const linhas = texto.trim().split(/\r?\n/);
 
-        if (!divInicial) return;
+            const tdInicial = this.parentElement;
+            const trInicial = tdInicial.parentElement;
 
-        const tdInicial = divInicial.parentElement;
+            const linhaInicial = trInicial.rowIndex;
+            const colunaInicial = tdInicial.cellIndex;
 
-        const linhaInicial = tdInicial.parentElement.rowIndex;
-        const colunaInicial = tdInicial.cellIndex;
+            linhas.forEach((linha, i) => {
 
-        linhas.forEach((linha, i) => {
+                const valores = linha.split("\t");
 
-            if (linha.trim() === "") return;
+                valores.forEach((valor, j) => {
 
-            const colunas = linha.split("\t");
+                    const tr = tbody.rows[linhaInicial + i];
 
-            colunas.forEach((valor, j) => {
+                    if (!tr) return;
 
-                const tr = tbody.rows[linhaInicial + i];
+                    const td = tr.cells[colunaInicial + j];
 
-                if (!tr) return;
+                    if (!td) return;
 
-                const td = tr.cells[colunaInicial + j];
+                    const input = td.querySelector("input");
 
-                if (!td) return;
+                    if (input) {
+                        input.value = valor.trim();
+                    }
 
-                td.firstElementChild.innerText = valor.trim();
+                });
 
             });
 
         });
 
-        atualizarQuantidadeFrota();
-
-    };
+    });
 
 }
 function atualizarQuantidadeFrota() {
@@ -298,9 +300,9 @@ function atualizarQuantidadeFrota() {
 
     Array.from(tbody.rows).forEach(linha => {
 
-        const div = linha.cells[1].querySelector(".celula");
+        const input = linha.cells[1].querySelector("input");
 
-        if (div && div.innerText.trim() !== "") {
+        if (input && input.value.trim() !== "") {
             total++;
         }
 
