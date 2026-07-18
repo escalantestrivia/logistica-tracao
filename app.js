@@ -3,8 +3,13 @@
 // app.js
 // ================================
 
+
+let relatorioIniciado = false;
+
+
 // Login
 const usuario = JSON.parse(localStorage.getItem("usuario"));
+
 
 if (!usuario) {
     window.location.href = "login.html";
@@ -187,12 +192,14 @@ function iniciarRelatorio() {
 
     localStorage.setItem("relatorio", JSON.stringify(relatorio));
 
-    document.getElementById("menuChecklist").disabled = false;
-    document.getElementById("menuFatos").disabled = false;
-    document.getElementById("menuLocomotivas").disabled = false;
-    document.getElementById("menuHistorico").disabled = false;
+relatorioIniciado = true;
 
-    mostrarTela("checklist");
+document.getElementById("menuChecklist").classList.remove("bloqueado");
+document.getElementById("menuFatos").classList.remove("bloqueado");
+document.getElementById("menuLocomotivas").classList.remove("bloqueado");
+document.getElementById("menuHistorico").classList.remove("bloqueado");
+
+mostrarTela("checklist");
 
 }
 // ===================================
