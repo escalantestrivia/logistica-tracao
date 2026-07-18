@@ -151,3 +151,15 @@ function listarRelatorios() {
     return Object.keys(banco).sort().reverse();
 
 }
+
+function atualizarAlteracao() {
+
+    const chave = obterChave();
+
+    if (!banco[chave]) return;
+
+    banco[chave].ultimaAlteracao = new Date().toISOString();
+
+    salvarBanco();
+
+}
