@@ -215,6 +215,93 @@ verificarLogin();
 
 </script>
 
+  <div class="modal fade" id="modalFato">
+
+<div class="modal-dialog modal-lg">
+
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h5>Fato Relevante</h5>
+
+</div>
+
+<div class="modal-body">
+
+<div class="row">
+
+<div class="col-md-2">
+
+<label>Hora</label>
+
+<input
+type="time"
+id="horaFato"
+class="form-control">
+
+</div>
+
+<div class="col-md-4">
+
+<label>Local</label>
+
+<input
+id="localFato"
+class="form-control">
+
+</div>
+
+<div class="col-md-6">
+
+<label>Descrição</label>
+
+<input
+id="descricaoFato"
+class="form-control">
+
+</div>
+
+</div>
+
+</div>
+
+<div class="modal-footer">
+
+<button
+class="btn btn-secondary"
+data-bs-dismiss="modal">
+
+Cancelar
+
+</button>
+
+<button
+class="btn btn-primary"
+onclick="salvarFato()">
+
+Salvar
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const modalFato=new bootstrap.Modal(
+
+document.getElementById("modalFato")
+
+);
+
+</script>
+
 </body>
 
 </html>
