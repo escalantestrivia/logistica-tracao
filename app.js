@@ -28,40 +28,35 @@ window.onload = function () {
     document.getElementById("txtData").value =
         new Date().toISOString().split("T")[0];
 
-    // Última tela
-    const relatorio = JSON.parse(localStorage.getItem("relatorio"));
+    // Bloqueia os menus
+    document.getElementById("menuChecklist").classList.add("bloqueado");
+    document.getElementById("menuFatos").classList.add("bloqueado");
+    document.getElementById("menuLocomotivas").classList.add("bloqueado");
+    document.getElementById("menuHistorico").classList.add("bloqueado");
 
-if (relatorio) {
-
-    const ultimaTela =
-        localStorage.getItem("ultimaTela") || "identificacao";
-
-    mostrarTela(ultimaTela);
-
-} else {
-
+    // Abre a tela de identificação
     mostrarTela("identificacao");
-
-}
 
     // Eventos Gestão de Operadores
     [
-    "controleApresentacao",
-    "frotaEquipada",
-    "ausencias",
-    "viras",
-    "postoEscala",
-    "outros"
-].forEach(id => {
+        "controleApresentacao",
+        "frotaEquipada",
+        "ausencias",
+        "viras",
+        "postoEscala",
+        "outros"
+    ].forEach(id => {
 
-    const campo = document.getElementById(id);
+        const campo = document.getElementById(id);
 
-    if (campo) {
-        campo.addEventListener("input", calcularTotalGestao);
-        campo.addEventListener("change", calcularTotalGestao);
-    }
+        if (campo) {
+            campo.addEventListener("input", calcularTotalGestao);
+            campo.addEventListener("change", calcularTotalGestao);
+        }
 
-});
+    });
+
+};
 
 calcularTotalGestao();
 
@@ -116,14 +111,32 @@ function calcularTotalGestao() {
 
 function mostrarTela(tela) {
 
-    const relatorio = JSON.parse(localStorage.getItem("relatorio"));
+    const bloqueados = {
+    checklist: "menuChecklist",
+    fatos: "menuFatos",
+    locomotivas: "menuLocomotivas",
+    historico: "menuHistorico"
+};
 
-  if (!relatorio && tela !== "identificacao") {
+function mostrarTela(tela) {
 
-    mostrarModalRelatorio();
+    const bloqueados = {
+        checklist: "menuChecklist",
+        fatos: "menuFatos",
+        locomotivas: "menuLocomotivas",
+        historico: "menuHistorico"
+    };
 
-    return;
-}
+    // Verifica se o menu está bloqueado
+    if (bloqueados[tela]) {
+
+        const botao = document.getElementById(bloqueados[tela]);
+
+        if (botao && botao.classList.contains("bloqueado")) {
+            mostrarModalRelatorio();
+            return;
+        }
+    }
 
     const telas = [
         "identificacao",
