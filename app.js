@@ -496,10 +496,12 @@ function adicionarLocomotiva() {
 
     container.insertAdjacentHTML("beforeend", `
 
-<div class="card mt-3">
+<div class="card mt-3 shadow-sm">
 
     <div class="card-header bg-light">
+
         <strong>Locomotiva ${numeroLocomotiva}</strong>
+
     </div>
 
     <div class="card-body">
@@ -525,31 +527,34 @@ function adicionarLocomotiva() {
 
         <hr>
 
-        <div class="row">
+        <div class="row align-items-end g-3">
 
             <div class="col-md-3">
 
                 <label class="form-label">Atendendo SA</label>
 
-                <select class="form-select atendeSA" onchange="toggleSA(this)">
+                <select class="form-select atendeSA"
+                        onchange="toggleSA(this)">
+
                     <option value="Não">Não</option>
                     <option value="Sim">Sim</option>
+
                 </select>
 
             </div>
 
-        </div>
+            <div class="col-md-4 campoSA" style="display:none;">
 
-        <div class="campoSA mt-3" style="display:none">
+                <label class="form-label">
+                    Número da SA
+                </label>
 
-            <label class="form-label">
-    Número da SA
-</label>
+                <input
+                    type="text"
+                    class="form-control numeroSA"
+                    placeholder="Ex.: SA-12345">
 
-<input
-    type="text"
-    class="form-control numeroSA"
-    placeholder="Ex.: SA-12345">
+            </div>
 
         </div>
 
@@ -558,31 +563,214 @@ function adicionarLocomotiva() {
         <div class="row g-3">
 
             <div class="col-md-3">
-                <label>Local</label>
-                <input type="text" class="form-control local">
-            </div>
 
-            <div class="col-md-2">
-                <label>KM</label>
-                <input type="number" class="form-control km">
-            </div>
+                <label class="form-label">Local</label>
 
-            <div class="col-md-2">
-                <label>Diesel</label>
-                <input type="number" class="form-control diesel">
-            </div>
+                <input
+                    type="text"
+                    class="form-control local">
 
-            <div class="col-md-2">
-                <label>Horímetro</label>
-                <input type="number" class="form-control horimetro">
             </div>
 
             <div class="col-md-3">
-                <label>Calços</label>
-                <input type="number" class="form-control calcos">
+
+                <label class="form-label">KM</label>
+
+                <input
+                    type="number"
+                    class="form-control km">
+
+            </div>
+
+            <div class="col-md-3">
+
+                <label class="form-label">Diesel</label>
+
+                <input
+                    type="number"
+                    class="form-control diesel">
+
+            </div>
+
+            <div class="col-md-3">
+
+                <label class="form-label">Horímetro</label>
+
+                <input
+                    type="number"
+                    class="form-control horimetro">
+
             </div>
 
         </div>
+
+        <hr>
+
+        <h6 class="fw-bold">
+            Inspeção da Locomotiva
+        </h6>
+
+        <div class="row g-3">
+
+            <div class="col-md-3">
+
+                <label class="form-label">
+                    Calços
+                </label>
+
+                <select class="form-select calcos">
+
+                    <option>Sim</option>
+                    <option>Não</option>
+
+                </select>
+
+            </div>
+
+            <div class="col-md-9">
+
+                <label class="form-label">
+                    Informação dos Calços
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control infoCalcos"
+                    placeholder="Quantidade ou observação">
+
+            </div>
+
+        </div>
+
+        <div class="row g-3 mt-2">
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Talha
+                </label>
+
+                <select class="form-select talha">
+
+                    <option>Sim</option>
+                    <option>Não</option>
+
+                </select>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Kit SOS
+                </label>
+
+                <select class="form-select kitSOS">
+
+                    <option>Sim</option>
+                    <option>Não</option>
+
+                </select>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Mangueiras / Mangotes
+                </label>
+
+                <select class="form-select mangotes">
+
+                    <option>Sim</option>
+                    <option>Não</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="row g-3 mt-2">
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Chaves de Mangueira
+                </label>
+
+                <select class="form-select chaves">
+
+                    <option>Sim</option>
+                    <option>Não</option>
+
+                </select>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Ferramentas
+                </label>
+
+                <select class="form-select ferramentas">
+
+                    <option>Sim</option>
+                    <option>Não</option>
+
+                </select>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Adaptador de Engate
+                </label>
+
+                <select class="form-select adaptador">
+
+                    <option>Sim</option>
+                    <option>Não</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="row mt-2">
+
+            <div class="col-md-4">
+
+                <label class="form-label">
+                    Níveis
+                </label>
+
+                <select class="form-select niveis">
+
+                    <option>Sim</option>
+                    <option>Não</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <label class="form-label">
+
+            <strong>Observações Gerais</strong>
+
+        </label>
+
+        <textarea
+            class="form-control observacoesGerais"
+            rows="5"
+            placeholder="Digite as observações da locomotiva..."></textarea>
 
     </div>
 
