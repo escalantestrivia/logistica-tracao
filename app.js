@@ -4,9 +4,6 @@
 // ================================
 
 
-let relatorioIniciado = false;
-
-
 // Login
 const usuario = JSON.parse(localStorage.getItem("usuario"));
 
@@ -108,9 +105,13 @@ function calcularTotalGestao() {
 }
 
 function mostrarTela(tela) {
-    if (!relatorioIniciado && tela !== "identificacao") {
-    return;
-}
+
+    const relatorio = JSON.parse(localStorage.getItem("relatorio"));
+
+    if (!relatorio && tela !== "identificacao") {
+        alert("Inicie o relatório para acessar esta página.");
+        return;
+    }
 
     const telas = [
         "identificacao",
@@ -195,7 +196,6 @@ function iniciarRelatorio() {
 
     localStorage.setItem("relatorio", JSON.stringify(relatorio));
 
-relatorioIniciado = true;
 
 document.getElementById("menuChecklist").classList.remove("bloqueado");
 document.getElementById("menuFatos").classList.remove("bloqueado");
