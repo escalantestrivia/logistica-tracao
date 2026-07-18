@@ -138,83 +138,82 @@
 
         <div class="card-body">
 
-<h5 class="mb-3">Gestão de Operadores</h5>
+            <h5 class="mb-3">Gestão de Operadores</h5>
 
-<div class="row text-center g-2">
+            <div class="row text-center g-2">
 
-    <div class="col">
-        <label class="form-label">Controle</label>
-        <input type="number" id="controleApresentacao" class="form-control" value="0">
-    </div>
+                <div class="col">
+                    <label class="form-label">Controle</label>
+                    <input type="number" id="controleApresentacao" class="form-control form-control-lg text-center" value="0">
+                </div>
 
-    <div class="col">
-        <label class="form-label">Frota Eq.</label>
-        <input type="number" id="frotaEquipada" class="form-control" value="0">
-    </div>
+                <div class="col">
+                    <label class="form-label">Frota Eq.</label>
+                    <input type="number" id="frotaEquipada" class="form-control form-control-lg text-center" value="0">
+                </div>
 
-    <div class="col">
-        <label class="form-label">Ausências</label>
-        <input type="number" id="ausencias" class="form-control" value="0">
-    </div>
+                <div class="col">
+                    <label class="form-label">Ausências</label>
+                    <input type="number" id="ausencias" class="form-control form-control-lg text-center" value="0">
+                </div>
 
-    <div class="col">
-        <label class="form-label">Viras</label>
-        <input type="number" id="viras" class="form-control" value="0">
-    </div>
+                <div class="col">
+                    <label class="form-label">Viras</label>
+                    <input type="number" id="viras" class="form-control form-control-lg text-center" value="0">
+                </div>
 
-    <div class="col">
-        <label class="form-label">Posto Escala</label>
-        <input type="number" id="postoEscala" class="form-control" value="0">
-    </div>
+                <div class="col">
+                    <label class="form-label">Posto Escala</label>
+                    <input type="number" id="postoEscala" class="form-control form-control-lg text-center" value="0">
+                </div>
 
-    <div class="col">
-        <label class="form-label">Outros</label>
-        <input type="number" id="outros" class="form-control" value="0">
-    </div>
-
-</div>
-
-<div class="text-center mt-4">
-
-    <h5 class="mb-1">Total Gestão</h5>
-
-    <h2 id="totalGestao" class="fw-bold text-primary">0</h2>
-
-</div>
-
-<hr class="my-4">
-            <hr class="my-4">
-
-            <h5 class="mb-3">Frota Equipada</h5>
-
-            <div class="table-responsive">
-
-                <table class="table table-bordered table-sm align-middle">
-
-                    <thead class="table-dark">
-
-                        <tr>
-
-                            <th style="width:70px;">Trem</th>
-                            <th style="width:120px;">TUE</th>
-                            <th>Local</th>
-                            <th>Operador</th>
-
-                        </tr>
-
-                    </thead>
-
-                    <tbody id="tbodyTrens">
-
-                    </tbody>
-
-                </table>
+                <div class="col">
+                    <label class="form-label">Outros</label>
+                    <input type="number" id="outros" class="form-control form-control-lg text-center" value="0">
+                </div>
 
             </div>
 
-            <div class="text-end mt-3">
+            <div class="text-center mt-4">
 
-                <button class="btn btn-success" onclick="salvarChecklist()">
+                <h5>Total Gestão</h5>
+
+                <h2 id="totalGestao" class="text-primary fw-bold">0</h2>
+
+            </div>
+
+            <hr>
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <strong>Frota Equipada</strong><br>
+
+                    <small class="text-muted">
+                        Clique para abrir a tabela de trens.
+                    </small>
+
+                </div>
+
+                <button
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalFrota">
+
+                    Abrir Frota Equipada
+
+                </button>
+
+            </div>
+
+            <hr>
+
+            <div class="text-end">
+
+                <button
+                    class="btn btn-success"
+                    onclick="salvarChecklist()">
 
                     Salvar e Continuar
 
@@ -259,5 +258,74 @@
 
 <script src="app.js"></script>
 
+<div class="modal fade" id="modalFrota" tabindex="-1">
+
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    Frota Equipada
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-hover" id="tabelaFrota">
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                <th style="width:70px;">Trem</th>
+                                <th style="width:120px;">TUE</th>
+                                <th style="width:220px;">Local</th>
+                                <th>Operador</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="tbodyTrens">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    class="btn btn-success"
+                    data-bs-dismiss="modal">
+
+                    Concluir
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 </html>
