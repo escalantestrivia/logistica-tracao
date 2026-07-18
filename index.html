@@ -128,13 +128,104 @@
 
             </div>
 
-            <div id="checklist" style="display:none">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h3>Check List</h3>
-                    </div>
+<div id="checklist" style="display:none;">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Check List</h4>
+        </div>
+
+        <div class="card-body">
+
+            <h5 class="mb-3">Gestão de Operadores</h5>
+
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <label class="form-label">Controle de apresentação</label>
+                    <input type="number" id="controleApresentacao" class="form-control" value="0" min="0">
                 </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Frota equipada</label>
+                    <input type="number" id="frotaEquipada" class="form-control" value="0" min="0" max="35">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Ausências</label>
+                    <input type="number" id="ausencias" class="form-control" value="0" min="0">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Viras</label>
+                    <input type="number" id="viras" class="form-control" value="0" min="0">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Posto Escala</label>
+                    <input type="number" id="postoEscala" class="form-control" value="0" min="0">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Outros</label>
+                    <input type="number" id="outros" class="form-control" value="0" min="0">
+                </div>
+
             </div>
+
+            <div class="alert alert-info mt-4">
+
+                <strong>Total Gestão:</strong>
+
+                <span id="totalGestao">0</span>
+
+            </div>
+
+            <hr class="my-4">
+
+            <h5 class="mb-3">Frota Equipada</h5>
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-sm align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+
+                            <th style="width:70px;">Trem</th>
+                            <th style="width:120px;">TUE</th>
+                            <th>Local</th>
+                            <th>Operador</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tbodyTrens">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="text-end mt-3">
+
+                <button class="btn btn-success" onclick="salvarChecklist()">
+
+                    Salvar e Continuar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
             <div id="fatos" style="display:none">
                 <div class="card shadow">
