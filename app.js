@@ -187,40 +187,30 @@ function carregarTabelaTrens() {
 
     for (let i = 1; i <= 35; i++) {
 
-        const linha = document.createElement("tr");
+        const tr = document.createElement("tr");
 
-        linha.innerHTML = `
+        tr.innerHTML = `
             <td class="text-center fw-bold">${i}</td>
 
             <td>
-                <div class="celula"
-                     contenteditable="true"
-                     tabindex="0"></div>
+                <input type="text"
+                       class="form-control form-control-sm tue">
             </td>
 
             <td>
-                <div class="celula"
-                     contenteditable="true"
-                     tabindex="0"></div>
+                <input type="text"
+                       class="form-control form-control-sm local">
             </td>
 
             <td>
-                <div class="celula"
-                     contenteditable="true"
-                     tabindex="0"></div>
+                <input type="text"
+                       class="form-control form-control-sm operador">
             </td>
         `;
 
-        tbody.appendChild(linha);
+        tbody.appendChild(tr);
 
     }
-
-    // Atualiza a quantidade quando o usuário digitar
-    tbody.querySelectorAll(".celula").forEach(celula => {
-
-        celula.addEventListener("input", atualizarQuantidadeFrota);
-
-    });
 
 }
 function habilitarColarExcel() {
