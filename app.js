@@ -3,7 +3,9 @@
 // app.js
 // ================================
 
-
+if (!localStorage.getItem("usuario")) {
+    window.location.href = "login.html";
+}
 // Login
 const usuario = JSON.parse(localStorage.getItem("usuario"));
 let relatorioIniciado = false;
@@ -12,6 +14,8 @@ let numeroOcorrencia = 0;
 if (!usuario) {
     window.location.href = "login.html";
 }
+
+
 
 // ================================
 // Inicialização
@@ -158,6 +162,18 @@ function mostrarTela(tela) {
 // ===================================
 // Iniciar Relatório
 // ===================================
+
+function deslogar() {
+
+    if (!confirm("Deseja realmente sair do sistema?")) {
+        return;
+    }
+
+    localStorage.removeItem("usuario");
+
+    window.location.href = "login.html";
+
+}
 
 // ===================================
 // Iniciar Relatório
