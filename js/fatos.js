@@ -148,7 +148,7 @@ banco[chave].fatos[fatoEditando]=fato;
 
 }
 
-salvarBanco();
+atualizarAlteracao();
 
 modalFato.hide();
 
@@ -182,7 +182,7 @@ const chave=obterChave();
 
 banco[chave].fatos.splice(i,1);
 
-salvarBanco();
+atualizarAlteracao();
 
 renderFatos();
 
