@@ -19,6 +19,7 @@
             display:flex;
             justify-content:center;
             align-items:center;
+            font-family:Arial, Helvetica, sans-serif;
         }
 
         .card{
@@ -40,7 +41,7 @@
             font-size:70px;
             color:#0d6efd;
             text-align:center;
-            margin-bottom:15px;
+            margin-bottom:20px;
         }
 
     </style>
@@ -77,7 +78,8 @@
                 type="text"
                 id="txtMatricula"
                 class="form-control"
-                placeholder="Digite sua matrícula">
+                placeholder="Digite sua matrícula"
+                autofocus>
 
         </div>
 
@@ -117,50 +119,84 @@
 
 <script>
 
-async function login() {
+window.onload = function(){
+
+    localStorage.removeItem("usuario");
+
+    document.getElementById("txtMatricula").focus();
+
+}
+
+async function login(){
 
     const matricula = document.getElementById("txtMatricula").value.trim();
 
     const senha = document.getElementById("txtSenha").value;
 
-    try {
+    if(matricula==="" || senha===""){
 
-        const resposta = await fetch("usuarios.json");
+        alert("Informe a matrícula e a senha.");
+
+        return;
+
+    }
+
+    try{
+
+        const resposta = await fetch("./usuarios.json");
+
+        if(!resposta.ok){
+
+            throw new Error("Não foi possível carregar usuarios.json");
+
+        }
 
         const usuarios = await resposta.json();
 
-        const usuario = usuarios.find(u =>
+        const usuario = usuarios.find(u=>
 
-            u.matricula === matricula &&
-            u.senha === senha
+            u.matricula===matricula &&
+            u.senha===senha
 
         );
 
-        if (!usuario) {
+        if(!usuario){
 
             alert("Matrícula ou senha inválidas.");
+
+            document.getElementById("txtSenha").value="";
 
             return;
 
         }
 
-        localStorage.setItem("usuario", JSON.stringify(usuario));
+        localStorage.setItem("usuario",JSON.stringify(usuario));
 
-        window.location.href = "index.html";
+        window.location.href="index.html";
 
     }
 
-    catch (erro) {
-
-        alert("Erro ao carregar usuários.");
+    catch(erro){
 
         console.error(erro);
+
+        alert("Erro ao carregar os usuários.");
 
     }
 
 }
 
-document.getElementById("txtSenha").addEventListener("keypress",function(e){
+document.getElementById("txtMatricula").addEventListener("keydown",function(e){
+
+    if(e.key==="Enter"){
+
+        document.getElementById("txtSenha").focus();
+
+    }
+
+});
+
+document.getElementById("txtSenha").addEventListener("keydown",function(e){
 
     if(e.key==="Enter"){
 
