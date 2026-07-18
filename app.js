@@ -301,28 +301,6 @@ function calcularTotalGestao() {
 
 }
 
-[
-"controleApresentacao",
-"ausencias",
-"viras",
-"postoEscala",
-"outros"
-].forEach(id=>{
-
-    document
-        .getElementById(id)
-        .addEventListener("input",calcularTotalGestao);
-
-});
-
-carregarTabelaTrens();
-
-habilitarColarExcel();
-
-calcularTotalGestao();
-// ===================================
-// Finalizar
-// ===================================
 // ===================================
 // Finalizar
 // ===================================
