@@ -195,8 +195,14 @@ function iniciarRelatorio() {
     // Histórico permanece bloqueado
     document.getElementById("menuHistorico").disabled = true;
 
-    // Abre o Check List
-    mostrarTela("checklist");
+    // Libera as abas
+document.getElementById("menuChecklist").disabled = false;
+document.getElementById("menuFatos").disabled = false;
+document.getElementById("menuLocomotivas").disabled = false;
+document.getElementById("menuHistorico").disabled = false;
+
+// Abre o Check List
+mostrarTela("checklist");
 
 }
 // ===================================
