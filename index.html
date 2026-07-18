@@ -100,101 +100,103 @@ Finalizar Relatório
 
 <div class="col-md-9">
 
-<div id="identificacao">
+<div class="card shadow">
 
-    <div class="card">
+    <div class="card-header">
+        <h4 class="mb-0">Identificação do Relatório</h4>
+    </div>
 
-        <div class="card-header">
+    <div class="card-body">
 
-            <h4>Identificação do Relatório</h4>
+        <div class="row">
 
-        </div>
+            <!-- Nome -->
 
-        <div class="card-body">
+            <div class="col-md-8 mb-3">
 
-            <div class="row">
+                <label class="form-label">Nome</label>
 
-                <div class="col-md-6 mb-3">
-
-                    <label class="form-label">Nome</label>
-
-                    <input
-                        id="txtNome"
-                        class="form-control"
-                        readonly>
-
-                </div>
-
-                <div class="col-md-6 mb-3">
-
-                    <label class="form-label">Matrícula</label>
-
-                    <input
-                        id="txtMatricula"
-                        class="form-control"
-                        readonly>
-
-                </div>
-
-                <div class="col-md-4 mb-3">
-
-                    <label class="form-label">Posto</label>
-
-                    <input
-                        id="txtPosto"
-                        class="form-control">
-
-                </div>
-
-                <div class="col-md-4 mb-3">
-
-                    <label class="form-label">Local</label>
-
-                    <select
-                        id="cmbLocal"
-                        class="form-select">
-
-                        <option value="">Selecione</option>
-                        <option>BAS</option>
-                        <option>SUZ</option>
-
-                    </select>
-
-                </div>
-
-                <div class="col-md-4 mb-3">
-
-                    <label class="form-label">Turno</label>
-
-                    <select
-                        id="cmbTurno"
-                        class="form-select">
-
-                        <option value="">Selecione</option>
-                        <option>Manhã</option>
-                        <option>Tarde</option>
-                        <option>Noite</option>
-
-                    </select>
-
-                </div>
-
-                <div class="col-md-3 mb-4">
-
-                    <label class="form-label">Data</label>
-
-                    <input
-                        id="txtData"
-                        type="date"
-                        class="form-control">
-
-                </div>
+                <input
+                    type="text"
+                    id="txtNome"
+                    class="form-control"
+                    readonly>
 
             </div>
 
+            <!-- Matrícula -->
+
+            <div class="col-md-4 mb-3">
+
+                <label class="form-label">Matrícula</label>
+
+                <input
+                    type="text"
+                    id="txtMatricula"
+                    class="form-control"
+                    readonly>
+
+            </div>
+
+            <!-- Posto -->
+
+            <div class="col-md-4 mb-3">
+
+                <label class="form-label">Posto</label>
+
+                <select
+                    id="cmbPosto"
+                    class="form-select">
+
+                    <option value="">Selecione</option>
+                    <option value="BAS">BAS</option>
+                    <option value="SUZ">SUZ</option>
+
+                </select>
+
+            </div>
+
+            <!-- Turno -->
+
+            <div class="col-md-4 mb-3">
+
+                <label class="form-label">Turno</label>
+
+                <select
+                    id="cmbTurno"
+                    class="form-select">
+
+                    <option value="">Selecione</option>
+                    <option>Manhã</option>
+                    <option>Tarde</option>
+                    <option>Noite</option>
+
+                </select>
+
+            </div>
+
+            <!-- Data -->
+
+            <div class="col-md-4 mb-3">
+
+                <label class="form-label">Data</label>
+
+                <input
+                    type="date"
+                    id="txtData"
+                    class="form-control">
+
+            </div>
+
+        </div>
+
+        <div class="text-end mt-3">
+
             <button
-                class="btn btn-primary"
+                class="btn btn-primary px-4"
                 onclick="iniciarRelatorio()">
+
+                <i class="bi bi-play-fill"></i>
 
                 Iniciar Relatório
 
