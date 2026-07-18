@@ -52,7 +52,7 @@ Nova Locomotiva
 
 </div>
 
-`;
+atualizarAlteracao();
 
 renderLocomotivas();
 
@@ -103,7 +103,7 @@ onclick="excluirLocomotiva(${i})">
 
 </tr>
 
-`;
+atualizarAlteracao();
 
 });
 
