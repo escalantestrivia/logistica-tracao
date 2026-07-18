@@ -45,7 +45,10 @@ window.onload = function () {
 
     });
 
-    function calcularTotalGestao() {
+    calcularTotalGestao();
+
+};   // <-- ESTA CHAVE E PONTO E VÍRGULA ESTÃO FALTANDO
+function calcularTotalGestao() {
 
     const controle = Number(document.getElementById("controleApresentacao").value) || 0;
     const ausencias = Number(document.getElementById("ausencias").value) || 0;
@@ -57,7 +60,6 @@ window.onload = function () {
 
     document.getElementById("totalGestao").textContent = total;
 
-}
 // ===================================
 // Troca de telas
 // ===================================
