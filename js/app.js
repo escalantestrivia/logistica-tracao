@@ -118,8 +118,7 @@ function carregarDia(){
 
     montarChecklist();
 
-    if(typeof renderFatos==="function")
-        renderFatos();
+    montarfatos();
 
     if(typeof renderLocomotivas==="function")
         renderLocomotivas();
