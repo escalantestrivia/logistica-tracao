@@ -53,6 +53,13 @@ function iniciarRelatorio() {
     carregarView("checklist");
 
 }
+function initIdentificacao() {
+
+    document
+        .getElementById("btnIniciar")
+        .addEventListener("click", iniciarRelatorio);
+
+}
 async function carregarView(nome) {
 
     const resposta = await fetch(`views/${nome}.html`);
@@ -81,5 +88,21 @@ document.querySelectorAll(".menu-item").forEach(botao => {
     });
 
 });
+
+function initChecklist() {
+
+}
+
+function initFatos() {
+
+}
+
+function initLocomotivas() {
+
+}
+
+function initHistorico() {
+
+}
 
 carregarView("identificacao");
