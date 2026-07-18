@@ -187,22 +187,12 @@ function iniciarRelatorio() {
 
     localStorage.setItem("relatorio", JSON.stringify(relatorio));
 
-    // Habilita os menus
     document.getElementById("menuChecklist").disabled = false;
     document.getElementById("menuFatos").disabled = false;
     document.getElementById("menuLocomotivas").disabled = false;
+    document.getElementById("menuHistorico").disabled = false;
 
-    // Histórico permanece bloqueado
-    document.getElementById("menuHistorico").disabled = true;
-
-    // Libera as abas
-document.getElementById("menuChecklist").disabled = false;
-document.getElementById("menuFatos").disabled = false;
-document.getElementById("menuLocomotivas").disabled = false;
-document.getElementById("menuHistorico").disabled = false;
-
-// Abre o Check List
-mostrarTela("checklist");
+    mostrarTela("checklist");
 
 }
 // ===================================
