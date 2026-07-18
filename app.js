@@ -1086,3 +1086,4 @@ const nomeArquivo =
     `Relatorio Escala - ${dataFormatada} - ${turno}.pdf`;
 
 doc.save(nomeArquivo);
+}
