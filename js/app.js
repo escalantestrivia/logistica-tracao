@@ -8,41 +8,6 @@ const relatorio = {
     locomotivas: []
 };
 
-function atualizarChecklist() {
-
-    const linhas = document.querySelectorAll("#tbodyChecklist tr");
-
-    relatorio.checklist.trensEquipados = [];
-
-    linhas.forEach((linha, indice) => {
-
-        const local = linha.querySelector(".local").value;
-
-        const operador = linha.querySelector(".operador").value.trim();
-
-        if (local !== "" || operador !== "") {
-
-            relatorio.checklist.trensEquipados.push({
-
-                numero: indice + 1,
-
-                local,
-
-                operador
-
-            });
-
-        }
-
-    });
-
-    document.getElementById("frota").value =
-        relatorio.checklist.trensEquipados.length;
-
-    atualizarGestao();
-
-}
-
 function iniciarRelatorio() {
 
     relatorio.identificacao = {
@@ -98,11 +63,51 @@ function initIdentificacao() {
 }
 async function carregarView(nome) {
 
-    const resposta = await fetch(`views/${nome}.html`);
+    try {
 
-    const html = await resposta.text();
+        const resposta = await fetch(`views/${nome}.html`);
 
-    document.getElementById("conteudo").innerHTML = html;
+        if (!resposta.ok) {
+            throw new Error(`Erro ao carregar ${nome}.html`);
+        }
+
+        const html = await resposta.text();
+
+        document.getElementById("conteudo").innerHTML = html;
+
+        switch (nome) {
+
+            case "identificacao":
+                initIdentificacao();
+                break;
+
+            case "checklist":
+                initChecklist();
+                break;
+
+            case "fatos":
+                initFatos();
+                break;
+
+            case "locomotivas":
+                initLocomotivas();
+                break;
+
+            case "historico":
+                initHistorico();
+                break;
+
+        }
+
+    } catch (erro) {
+
+        document.getElementById("conteudo").innerHTML = `
+            <div class="alert alert-danger m-3">
+                ${erro.message}
+            </div>
+        `;
+
+    }
 
 }
 
