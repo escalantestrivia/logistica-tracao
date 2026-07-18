@@ -11,10 +11,33 @@ const relatorio = {
 async function carregarView(nome) {
 
     const resposta = await fetch(`views/${nome}.html`);
-
     const html = await resposta.text();
 
     document.getElementById("conteudo").innerHTML = html;
+
+    switch (nome) {
+
+        case "identificacao":
+            initIdentificacao();
+            break;
+
+        case "checklist":
+            initChecklist();
+            break;
+
+        case "fatos":
+            initFatos();
+            break;
+
+        case "locomotivas":
+            initLocomotivas();
+            break;
+
+        case "historico":
+            initHistorico();
+            break;
+
+    }
 
 }
 
