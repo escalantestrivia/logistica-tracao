@@ -52,26 +52,23 @@ window.onload = function () {
     calcularTotalGestao();
 
     // Modal Frota
-    const modal = document.getElementById("modalFrota");
+   const modal = document.getElementById("modalFrota");
 
-    if (modal) {
+if (modal) {
 
-        modal.addEventListener("shown.bs.modal", () => {
+    modal.addEventListener("shown.bs.modal", () => {
 
-            const tbody = document.getElementById("tbodyTrens");
+        const tbody = document.getElementById("tbodyTrens");
 
-            if (tbody && tbody.rows.length === 0) {
+        if (tbody && tbody.rows.length === 0) {
 
-                carregarTabelaTrens();
-                habilitarColarExcel();
+            carregarTabelaTrens();
 
-            }
+        }
 
-        });
+    });
 
-    }
-
-};
+}
 
 // ================================
 // Gestão de Operadores
@@ -233,10 +230,10 @@ function carregarTabelaTrens() {
         `;
 
         tbody.appendChild(tr);
-        tr.querySelectorAll("input").forEach(input => {
-});
 
     }
+
+    habilitarColarExcel();
 
 }
 function habilitarColarExcel() {
@@ -247,19 +244,28 @@ function habilitarColarExcel() {
 
     tbody.querySelectorAll("input").forEach(input => {
 
-        input.addEventListener("paste", function (e) {
+        input.onpaste = function (e) {
+
+            const texto =
+                (e.clipboardData || window.clipboardData).getData("text");
+
+            // Apenas uma célula → cola normalmente
+            if (!texto.includes("\t") && !texto.includes("\n")) {
+                return;
+            }
 
             e.preventDefault();
-
-            const texto = (e.clipboardData || window.clipboardData).getData("text");
 
             const linhas = texto.trim().split(/\r?\n/);
 
             const tdInicial = this.parentElement;
             const trInicial = tdInicial.parentElement;
 
-            const linhaInicial = trInicial.rowIndex;
-            const colunaInicial = tdInicial.cellIndex;
+            const linhaInicial =
+                Array.from(tbody.rows).indexOf(trInicial);
+
+            const colunaInicial =
+                tdInicial.cellIndex;
 
             linhas.forEach((linha, i) => {
 
@@ -275,17 +281,17 @@ function habilitarColarExcel() {
 
                     if (!td) return;
 
-                    const input = td.querySelector("input");
+                    const inputDestino = td.querySelector("input");
 
-                    if (input) {
-                        input.value = valor.trim();
+                    if (inputDestino) {
+                        inputDestino.value = valor.trim();
                     }
 
                 });
 
             });
 
-        });
+        };
 
     });
 
@@ -321,23 +327,13 @@ function atualizarQuantidadeFrota() {
 
 function limparFrota() {
 
-    if (!confirm("Deseja realmente limpar toda a Frota Equipada?")) {
+    if (!confirm("Deseja realmente limpar toda a tabela?")) {
         return;
     }
 
-    const tbody = document.getElementById("tbodyTrens");
-
-    if (!tbody) return;
-
-    Array.from(tbody.rows).forEach(linha => {
-
-        linha.cells[1].innerText = "";
-        linha.cells[2].innerText = "";
-        linha.cells[3].innerText = "";
-
-    });
-
-    document.getElementById("frotaEquipada").value = 0;
+    document
+        .querySelectorAll("#tbodyTrens input")
+        .forEach(input => input.value = "");
 
 }
 
@@ -346,3 +342,5 @@ function finalizarRelatorio() {
     alert("Função em desenvolvimento.");
 
 }
+
+
