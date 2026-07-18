@@ -108,10 +108,12 @@ function mostrarTela(tela) {
 
     const relatorio = JSON.parse(localStorage.getItem("relatorio"));
 
-    if (!relatorio && tela !== "identificacao") {
-        alert("Inicie o relatório para acessar esta página.");
-        return;
-    }
+  if (!relatorio && tela !== "identificacao") {
+
+    mostrarModalRelatorio();
+
+    return;
+}
 
     const telas = [
         "identificacao",
@@ -319,5 +321,15 @@ function limparFrota() {
     });
 
     document.querySelector("#tbodyTrens input")?.focus();
+
+}
+
+function mostrarModalRelatorio() {
+
+    const modal = new bootstrap.Modal(
+        document.getElementById("modalRelatorio")
+    );
+
+    modal.show();
 
 }
