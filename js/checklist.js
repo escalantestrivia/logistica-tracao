@@ -234,7 +234,7 @@ function salvarChecklist(){
 
     };
 
-    salvarBanco();
+    atualizarAlteracao();
 
 }
 
