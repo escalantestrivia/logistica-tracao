@@ -143,6 +143,28 @@ function carregarTabelaTrens() {
 
 function habilitarColarExcel() {
 
+    const modal = document.getElementById("modalFrota");
+
+modal.addEventListener("shown.bs.modal", function () {
+
+    const primeiraCelula =
+        document.querySelector("#tbodyTrens tr:first-child td:nth-child(2)");
+
+    if (primeiraCelula) {
+
+        primeiraCelula.focus();
+
+        const range = document.createRange();
+        range.selectNodeContents(primeiraCelula);
+
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+    }
+
+});
+
     const tbody = document.getElementById("tbodyTrens");
 
     tbody.addEventListener("paste", function (e) {
