@@ -10,45 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
-<body>
-    <div id="fatos" style="display:none">
 
-    <div class="card shadow">
-
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Fatos Relevantes</h4>
-        </div>
-
-        <div class="card-body">
-
-            <div id="listaOcorrencias"></div>
-
-            <div class="d-flex justify-content-between mt-3">
-
-                <button
-                    class="btn btn-primary"
-                    onclick="adicionarOcorrencia()">
-
-                    <i class="bi bi-plus-circle"></i>
-                    Adicionar Ocorrência
-
-                </button>
-
-                <button
-                    class="btn btn-success"
-                    onclick="salvarFatos()">
-
-                    Salvar e Continuar
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
 <div class="modal fade" id="modalRelatorio" tabindex="-1" aria-hidden="true">
 
     <div class="modal-dialog modal-dialog-centered">
@@ -430,5 +392,45 @@
 
 <script src="app.js"></script>
 
+<body>
+    <div id="fatos" style="display:none">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Fatos Relevantes</h4>
+        </div>
+
+        <div class="card-body">
+
+            <div id="listaOcorrencias"></div>
+
+            <div class="d-flex justify-content-between mt-3">
+
+                <button
+                    class="btn btn-primary"
+                    onclick="adicionarOcorrencia()">
+
+                    <i class="bi bi-plus-circle"></i>
+                    Adicionar Ocorrência
+
+                </button>
+
+                <button
+                    class="btn btn-success"
+                    onclick="salvarFatos()">
+
+                    Salvar e Continuar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+    
 </body>
 </html>
