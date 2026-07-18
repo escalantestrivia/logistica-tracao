@@ -115,6 +115,88 @@ function iniciarRelatorio() {
     mostrarTela("checklist");
 }
 
+function carregarTabelaTrens(){
+
+    const tbody = document.getElementById("tbodyTrens");
+
+    tbody.innerHTML = "";
+
+    for(let i = 1; i <= 35; i++){
+
+        tbody.innerHTML += `
+
+        <tr>
+
+            <td class="text-center">${i}</td>
+
+            <td>
+
+                <input
+                    type="text"
+                    class="form-control tue">
+
+            </td>
+
+            <td>
+
+                <input
+                    type="text"
+                    class="form-control local">
+
+            </td>
+
+            <td>
+
+                <input
+                    type="text"
+                    class="form-control operador">
+
+            </td>
+
+        </tr>
+
+        `;
+
+    }
+
+}
+
+function calcularTotalGestao(){
+
+    const controle = Number(document.getElementById("controleApresentacao").value) || 0;
+    const ausencias = Number(document.getElementById("ausencias").value) || 0;
+    const viras = Number(document.getElementById("viras").value) || 0;
+    const posto = Number(document.getElementById("postoEscala").value) || 0;
+    const outros = Number(document.getElementById("outros").value) || 0;
+
+    const total =
+        controle -
+        ausencias -
+        viras -
+        posto -
+        outros;
+
+    document.getElementById("totalGestao").innerText = total;
+
+}
+
+[
+"controleApresentacao",
+"ausencias",
+"viras",
+"postoEscala",
+"outros"
+].forEach(id=>{
+
+    document
+        .getElementById(id)
+        .addEventListener("input",calcularTotalGestao);
+
+});
+
+carregarTabelaTrens();
+
+calcularTotalGestao();
 // ===================================
 // Finalizar
 // ===================================
