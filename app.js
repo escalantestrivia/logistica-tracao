@@ -1027,43 +1027,6 @@ if (relatorio.locomotivas && relatorio.locomotivas.length) {
     y += 10;
 
 }
-    //==========================
-// RODAPÉ
-//==========================
-
-const paginas = doc.getNumberOfPages();
-
-for(let i=1;i<=paginas;i++){
-
-    doc.setPage(i);
-
-    doc.setDrawColor(180);
-    doc.line(10,290,200,290);
-
-    doc.setFontSize(9);
-
-    doc.text(
-        "Logística da Tração",
-        14,
-        295
-    );
-
-    doc.text(
-        `Página ${i} de ${paginas}`,
-        105,
-        295,
-        {align:"center"}
-    );
-
-    doc.text(
-        dataAtual + " " + horaAtual,
-        196,
-        295,
-        {align:"right"}
-    );
-
-}
-
 //==========================
 // RODAPÉ
 //==========================
