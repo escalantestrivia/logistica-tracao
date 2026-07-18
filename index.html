@@ -1,249 +1,171 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Logística da Tração</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
-
 <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
 <nav class="navbar navbar-dark bg-primary">
+    <div class="container-fluid">
+        <span class="navbar-brand">LOGÍSTICA DA TRAÇÃO</span>
 
-<div class="container-fluid">
-
-<span class="navbar-brand">
-
-LOGÍSTICA DA TRAÇÃO
-
-</span>
-
-<div class="text-white">
-
-<span id="lblNome"></span>
-
-|
-
-<span id="lblMatricula"></span>
-
-</div>
-
-</div>
-
+        <div class="text-white">
+            <span id="lblNome"></span>
+            |
+            <span id="lblMatricula"></span>
+        </div>
+    </div>
 </nav>
 
 <div class="container-fluid mt-3">
+    <div class="row">
 
-<div class="row">
+        <div class="col-md-3">
 
-<div class="col-md-3">
+            <div class="list-group">
 
-<div class="list-group">
+                <button id="menuIdentificacao" class="list-group-item list-group-item-action active"
+                    onclick="mostrarTela('identificacao')">
+                    Identificação
+                </button>
 
-<button class="list-group-item active"
-onclick="mostrarTela('identificacao')">
+                <button id="menuChecklist" class="list-group-item list-group-item-action"
+                    onclick="mostrarTela('checklist')">
+                    Check List
+                </button>
 
-Identificação
+                <button id="menuFatos" class="list-group-item list-group-item-action"
+                    onclick="mostrarTela('fatos')">
+                    Fatos Relevantes
+                </button>
 
-</button>
+                <button id="menuLocomotivas" class="list-group-item list-group-item-action"
+                    onclick="mostrarTela('locomotivas')">
+                    Locomotivas
+                </button>
 
-<button class="list-group-item"
-onclick="mostrarTela('checklist')">
+                <button id="menuHistorico" class="list-group-item list-group-item-action"
+                    onclick="mostrarTela('historico')">
+                    Histórico
+                </button>
 
-Check List
+                <hr>
 
-</button>
-
-<button class="list-group-item"
-onclick="mostrarTela('fatos')">
-
-Fatos Relevantes
-
-</button>
-
-<button class="list-group-item"
-onclick="mostrarTela('locomotivas')">
-
-Locomotivas
-
-</button>
-
-<button class="list-group-item"
-onclick="mostrarTela('historico')">
-
-Histórico
-
-</button>
-
-<hr>
-
-<button class="btn btn-success">
-
-Finalizar Relatório
-
-</button>
-
-</div>
-
-</div>
-
-<div class="col-md-9">
-
-<div class="card shadow">
-
-    <div class="card-header">
-        <h4 class="mb-0">Identificação do Relatório</h4>
-    </div>
-
-    <div class="card-body">
-
-        <div class="row">
-
-            <!-- Nome -->
-
-            <div class="col-md-8 mb-3">
-
-                <label class="form-label">Nome</label>
-
-                <input
-                    type="text"
-                    id="txtNome"
-                    class="form-control"
-                    readonly>
-
-            </div>
-
-            <!-- Matrícula -->
-
-            <div class="col-md-4 mb-3">
-
-                <label class="form-label">Matrícula</label>
-
-                <input
-                    type="text"
-                    id="txtMatricula"
-                    class="form-control"
-                    readonly>
-
-            </div>
-
-            <!-- Posto -->
-
-            <div class="col-md-4 mb-3">
-
-                <label class="form-label">Posto</label>
-
-                <select
-                    id="cmbPosto"
-                    class="form-select">
-
-                    <option value="">Selecione</option>
-                    <option value="BAS">BAS</option>
-                    <option value="SUZ">SUZ</option>
-
-                </select>
-
-            </div>
-
-            <!-- Turno -->
-
-            <div class="col-md-4 mb-3">
-
-                <label class="form-label">Turno</label>
-
-                <select
-                    id="cmbTurno"
-                    class="form-select">
-
-                    <option value="">Selecione</option>
-                    <option>Manhã</option>
-                    <option>Tarde</option>
-                    <option>Noite</option>
-
-                </select>
-
-            </div>
-
-            <!-- Data -->
-
-            <div class="col-md-4 mb-3">
-
-                <label class="form-label">Data</label>
-
-                <input
-                    type="date"
-                    id="txtData"
-                    class="form-control">
+                <button class="btn btn-success" onclick="finalizarRelatorio()">
+                    Finalizar Relatório
+                </button>
 
             </div>
 
         </div>
 
-        <div class="text-end mt-3">
+        <div class="col-md-9">
 
-            <button
-                class="btn btn-primary px-4"
-                onclick="iniciarRelatorio()">
+            <div id="identificacao">
 
-                <i class="bi bi-play-fill"></i>
+                <div class="card shadow">
 
-                Iniciar Relatório
+                    <div class="card-header">
+                        <h4 class="mb-0">Identificação do Relatório</h4>
+                    </div>
 
-            </button>
+                    <div class="card-body">
+
+                        <div class="row">
+
+                            <div class="col-md-8 mb-3">
+                                <label class="form-label">Nome</label>
+                                <input type="text" id="txtNome" class="form-control" readonly>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Matrícula</label>
+                                <input type="text" id="txtMatricula" class="form-control" readonly>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Posto</label>
+                                <select id="cmbPosto" class="form-select">
+                                    <option value="">Selecione</option>
+                                    <option>BAS</option>
+                                    <option>SUZ</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Turno</label>
+                                <select id="cmbTurno" class="form-select">
+                                    <option value="">Selecione</option>
+                                    <option>Manhã</option>
+                                    <option>Tarde</option>
+                                    <option>Noite</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Data</label>
+                                <input type="date" id="txtData" class="form-control">
+                            </div>
+
+                        </div>
+
+                        <div class="text-end">
+                            <button class="btn btn-primary" onclick="iniciarRelatorio()">
+                                <i class="bi bi-play-fill"></i> Iniciar Relatório
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="checklist" style="display:none">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h3>Check List</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div id="fatos" style="display:none">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h3>Fatos Relevantes</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div id="locomotivas" style="display:none">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h3>Locomotivas</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div id="historico" style="display:none">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h3>Histórico</h3>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
     </div>
-
-</div>
-
-<h3>Identificação</h3>
-
-</div>
-
-<div id="checklist" style="display:none;">
-
-<h3>Check List</h3>
-
-</div>
-
-<div id="fatos" style="display:none;">
-
-<h3>Fatos Relevantes</h3>
-
-</div>
-
-<div id="locomotivas" style="display:none;">
-
-<h3>Locomotivas</h3>
-
-</div>
-
-<div id="historico" style="display:none;">
-
-<h3>Histórico</h3>
-
-</div>
-
-</div>
-
-</div>
-
 </div>
 
 <script src="app.js"></script>
 
 </body>
-
 </html>
