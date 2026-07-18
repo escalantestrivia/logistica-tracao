@@ -1,0 +1,40 @@
+const relatorio = {
+    identificacao: {},
+    checklist: {
+        trensEquipados: [],
+        gestao: {}
+    },
+    fatos: [],
+    locomotivas: []
+};
+
+async function carregarView(nome) {
+
+    const resposta = await fetch(`views/${nome}.html`);
+
+    const html = await resposta.text();
+
+    document.getElementById("conteudo").innerHTML = html;
+
+}
+
+document.querySelectorAll(".menu-item").forEach(botao => {
+
+    botao.addEventListener("click", () => {
+
+        if (botao.disabled)
+            return;
+
+        document
+            .querySelectorAll(".menu-item")
+            .forEach(item => item.classList.remove("active"));
+
+        botao.classList.add("active");
+
+        carregarView(botao.dataset.view);
+
+    });
+
+});
+
+carregarView("identificacao");
