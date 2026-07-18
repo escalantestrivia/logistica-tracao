@@ -307,4 +307,3 @@ function limparFrota() {
     document.querySelector("#tbodyTrens input")?.focus();
 
 }
-
