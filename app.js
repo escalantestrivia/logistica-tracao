@@ -360,8 +360,6 @@ function salvarChecklist() {
 
 }
 
-let numeroOcorrencia = 0;
-
 function adicionarOcorrencia() {
 
     numeroOcorrencia++;
@@ -421,118 +419,59 @@ function salvarFatos() {
 
     mostrarTela("locomotivas");
 
+    if (numeroLocomotiva === 0) {
+
+        adicionarLocomotiva();
+
+    }
+
 }
 
 let numeroLocomotiva = 0;
 
-function adicionarLocomotiva() {
+function salvarLocomotivas() {
 
-    numeroLocomotiva++;
+    const relatorio = JSON.parse(localStorage.getItem("relatorio"));
 
-    const container = document.getElementById("listaLocomotivas");
+    relatorio.locomotivas = [];
 
-    container.insertAdjacentHTML("beforeend", `
+    document.querySelectorAll("#listaLocomotivas .card").forEach(card => {
 
-<div class="card mt-3">
+        relatorio.locomotivas.push({
 
-    <div class="card-header bg-light">
+            trem: card.querySelector(".trem").value,
+            operador1: card.querySelector(".operador1").value,
+            operador2: card.querySelector(".operador2").value,
 
-        <strong>Locomotiva ${numeroLocomotiva}</strong>
+            atendeSA: card.querySelector(".atendeSA").value,
+            infoSA: card.querySelector(".infoSA").value,
 
-    </div>
+            local: card.querySelector(".local").value,
+            km: card.querySelector(".km").value,
+            diesel: card.querySelector(".diesel").value,
+            horimetro: card.querySelector(".horimetro").value,
+            calcos: card.querySelector(".calcos").value,
 
-    <div class="card-body">
+            talha: card.querySelector(".talha").value,
+            kitSOS: card.querySelector(".kitSOS").value,
+            mangotes: card.querySelector(".mangotes").value,
+            chaves: card.querySelector(".chaves").value,
+            ferramentas: card.querySelector(".ferramentas").value,
+            adaptador: card.querySelector(".adaptador").value,
+            niveis: card.querySelector(".niveis").value,
 
-        <div class="row g-3">
+            observacoes: card.querySelector(".observacoesGerais").value
 
-            <div class="col-md-2">
-                <label class="form-label">Trem</label>
-                <input type="text" class="form-control trem">
-            </div>
+        });
 
-            <div class="col-md-5">
-                <label class="form-label">Operador 1</label>
-                <input type="text" class="form-control operador1">
-            </div>
+    });
 
-            <div class="col-md-5">
-                <label class="form-label">Operador 2</label>
-                <input type="text" class="form-control operador2">
-            </div>
+    localStorage.setItem(
+        "relatorio",
+        JSON.stringify(relatorio)
+    );
 
-        </div>
-
-        <hr>
-
-        <div class="row g-3">
-
-            <div class="col-md-3">
-
-                <label class="form-label">Atendendo SA</label>
-
-                <select
-                    class="form-select atendeSA"
-                    onchange="toggleSA(this)">
-
-                    <option value="Não">Não</option>
-                    <option value="Sim">Sim</option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-        <div
-            class="campoSA mt-3"
-            style="display:none;">
-
-            <label class="form-label">
-                Informações do Atendimento SA
-            </label>
-
-            <textarea
-                class="form-control infoSA"
-                rows="4"></textarea>
-
-        </div>
-
-        <hr>
-
-        <div class="row g-3">
-
-            <div class="col-md-3">
-                <label class="form-label">Local</label>
-                <input type="text" class="form-control local">
-            </div>
-
-            <div class="col-md-2">
-                <label class="form-label">KM</label>
-                <input type="number" class="form-control km">
-            </div>
-
-            <div class="col-md-2">
-                <label class="form-label">Diesel</label>
-                <input type="number" class="form-control diesel">
-            </div>
-
-            <div class="col-md-2">
-                <label class="form-label">Horímetro</label>
-                <input type="number" class="form-control horimetro">
-            </div>
-
-            <div class="col-md-3">
-                <label class="form-label">Calços</label>
-                <input type="number" class="form-control calcos">
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-`);
+    mostrarTela("historico");
 
 }
 
