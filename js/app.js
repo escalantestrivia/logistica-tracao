@@ -7,6 +7,42 @@ const relatorio = {
     fatos: [],
     locomotivas: []
 };
+
+function atualizarChecklist() {
+
+    const linhas = document.querySelectorAll("#tbodyChecklist tr");
+
+    relatorio.checklist.trensEquipados = [];
+
+    linhas.forEach((linha, indice) => {
+
+        const local = linha.querySelector(".local").value;
+
+        const operador = linha.querySelector(".operador").value.trim();
+
+        if (local !== "" || operador !== "") {
+
+            relatorio.checklist.trensEquipados.push({
+
+                numero: indice + 1,
+
+                local,
+
+                operador
+
+            });
+
+        }
+
+    });
+
+    document.getElementById("frota").value =
+        relatorio.checklist.trensEquipados.length;
+
+    atualizarGestao();
+
+}
+
 function iniciarRelatorio() {
 
     relatorio.identificacao = {
@@ -88,8 +124,155 @@ document.querySelectorAll(".menu-item").forEach(botao => {
     });
 
 });
+function atualizarChecklist() {
+
+    const linhas = document.querySelectorAll("#tbodyChecklist tr");
+
+    relatorio.checklist.trensEquipados = [];
+
+    linhas.forEach((linha, indice) => {
+
+        const local = linha.querySelector(".local").value;
+
+        const operador = linha.querySelector(".operador").value.trim();
+
+        if (local !== "" || operador !== "") {
+
+            relatorio.checklist.trensEquipados.push({
+
+                numero: indice + 1,
+
+                local,
+
+                operador
+
+            });
+
+        }
+
+    });
+
+    document.getElementById("frota").value =
+        relatorio.checklist.trensEquipados.length;
+
+    atualizarGestao();
+
+}
+
+function atualizarGestao() {
+
+    const controle =
+        Number(document.getElementById("controle").value);
+
+    const frota =
+        Number(document.getElementById("frota").value);
+
+    const ausencias =
+        Number(document.getElementById("ausencias").value);
+
+    const viras =
+        Number(document.getElementById("viras").value);
+
+    const postoEscala =
+        Number(document.getElementById("postoEscala").value);
+
+    const outros =
+        Number(document.getElementById("outros").value);
+
+    const total =
+        controle -
+        frota -
+        ausencias -
+        viras -
+        postoEscala -
+        outros;
+
+    document.getElementById("totalGestao").value = total;
+
+    relatorio.checklist.gestao = {
+
+        controleApresentacao: controle,
+
+        frotaEquipada: frota,
+
+        ausencias,
+
+        viras,
+
+        postoEscala,
+
+        outros,
+
+        totalGestao: total
+
+    };
+
+    localStorage.setItem(
+        "relatorioAtual",
+        JSON.stringify(relatorio)
+    );
+
+}
 
 function initChecklist() {
+
+    const tbody = document.getElementById("tbodyChecklist");
+
+    tbody.innerHTML = "";
+
+    for (let i = 1; i <= 35; i++) {
+
+        tbody.innerHTML += `
+            <tr>
+
+                <td>${i}</td>
+
+                <td>
+
+                    <select class="form-select form-select-sm local">
+
+                        <option value=""></option>
+
+                        <option>BAS</option>
+
+                        <option>SUZ</option>
+
+                    </select>
+
+                </td>
+
+                <td>
+
+                    <input
+                        class="form-control form-control-sm operador"
+                        type="text">
+
+                </td>
+
+            </tr>
+        `;
+
+    }
+
+    document
+        .querySelectorAll(".local,.operador")
+        .forEach(campo => {
+
+            campo.addEventListener("input", atualizarChecklist);
+
+            campo.addEventListener("change", atualizarChecklist);
+
+        });
+
+    document
+        .querySelectorAll("#controle,#ausencias,#viras,#postoEscala,#outros")
+        .forEach(campo => {
+
+            campo.addEventListener("input", atualizarGestao);
+
+        });
+
+    atualizarChecklist();
 
 }
 
