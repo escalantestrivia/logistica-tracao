@@ -108,6 +108,9 @@ function calcularTotalGestao() {
 }
 
 function mostrarTela(tela) {
+    if (!relatorioIniciado && tela !== "identificacao") {
+    return;
+}
 
     const telas = [
         "identificacao",
