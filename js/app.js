@@ -120,8 +120,7 @@ function carregarDia(){
 
     montarfatos();
 
-    if(typeof renderLocomotivas==="function")
-        renderLocomotivas();
+    montarLocomotivas();
 
     if(typeof renderRadios==="function")
         renderRadios();
