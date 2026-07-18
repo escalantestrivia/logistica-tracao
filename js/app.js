@@ -98,29 +98,47 @@ function carregarDia(){
 
     const chave = obterChave();
 
-    if(!banco[chave]){
+    if (!banco[chave]) {
 
-        banco[chave]={
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
 
-            checklist:{},
+    banco[chave] = {
 
-            fatos:[],
+        data: document.getElementById("data").value,
 
-            locomotivas:[],
+        local: document.getElementById("local").value,
 
-            radios:[]
+        turno: document.getElementById("turno").value,
 
-        };
+        usuario: usuario ? usuario.nome : "",
 
-        salvarBanco();
+        matricula: usuario ? usuario.matricula : "",
 
-    }
+        dataCriacao: new Date().toISOString(),
+
+        ultimaAlteracao: new Date().toISOString(),
+
+        checklist: {},
+
+        fatos: [],
+
+        locomotivas: [],
+
+        radios: []
+
+    };
+
+    salvarBanco();
+
+}
 
     montarChecklist();
 
     montarfatos();
 
     montarLocomotivas();
+
+    montarHistorico();
 
     if(typeof renderRadios==="function")
         renderRadios();
