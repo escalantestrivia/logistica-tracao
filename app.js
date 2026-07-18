@@ -695,7 +695,7 @@ async function gerarPDF() {
     doc.setFontSize(18);
 
     doc.text(
-        "RELATÓRIO LOGÍSTICA DA TRAÇÃO",
+        "RELATÓRIO ESCALA - TRIVIA",
         largura/2,
         14,
         {align:"center"}
