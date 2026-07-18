@@ -45,34 +45,19 @@ window.onload = function () {
 
     });
 
-    calcularTotalGestao();
+    function calcularTotalGestao() {
 
-    // Modal Frota
-    const modal = document.getElementById("modalFrota");
+    const controle = Number(document.getElementById("controleApresentacao").value) || 0;
+    const ausencias = Number(document.getElementById("ausencias").value) || 0;
+    const viras = Number(document.getElementById("viras").value) || 0;
+    const posto = Number(document.getElementById("postoEscala").value) || 0;
+    const outros = Number(document.getElementById("outros").value) || 0;
 
-    if (modal) {
+    const total = controle - ausencias - viras - posto - outros;
 
-        modal.addEventListener("shown.bs.modal", () => {
+    document.getElementById("totalGestao").textContent = total;
 
-            const tbody = document.getElementById("tbodyTrens");
-
-            if (tbody.rows.length === 0) {
-
-                carregarTabelaTrens();
-                habilitarColarExcel();
-
-            }
-
-            const primeira =
-                document.querySelector("#tbodyTrens tr:first-child td:nth-child(2)");
-
-            if (primeira) primeira.focus();
-
-        });
-
-    }
-
-};
+}
 // ===================================
 // Troca de telas
 // ===================================
