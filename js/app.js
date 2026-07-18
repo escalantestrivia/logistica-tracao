@@ -39,3 +39,12 @@ function mostrarTela(nome) {
     document.getElementById(nome).style.display = "block";
 
 }
+
+document.getElementById("txtNome").value = usuario.nome;
+document.getElementById("txtMatricula").value = usuario.matricula;
+
+function iniciarRelatorio(){
+
+    alert("Relatório iniciado.");
+
+}
