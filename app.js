@@ -207,13 +207,17 @@ function habilitarColarExcel() {
 
         e.preventDefault();
 
-        const texto =
-            (e.clipboardData || window.clipboardData).getData("text");
+        const texto = (e.clipboardData || window.clipboardData).getData("text");
 
         const linhas = texto.trim().split(/\r?\n/);
 
-        const linhaInicial = e.target.parentElement.rowIndex - 1;
-        const colunaInicial = e.target.cellIndex;
+        // Descobre a célula onde começou a colagem
+        const celulaInicial = e.target.closest("td");
+
+        if (!celulaInicial) return;
+
+        const linhaInicial = celulaInicial.parentElement.rowIndex;
+        const colunaInicial = celulaInicial.cellIndex;
 
         linhas.forEach((linha, i) => {
 
@@ -229,7 +233,7 @@ function habilitarColarExcel() {
 
                 if (!td) return;
 
-                td.innerText = valor;
+                td.innerText = valor.trim();
 
             });
 
@@ -237,7 +241,7 @@ function habilitarColarExcel() {
 
         atualizarQuantidadeFrota();
 
-    }, { once: true });
+    });
 
 }
 function atualizarQuantidadeFrota() {
