@@ -115,49 +115,92 @@ function iniciarRelatorio() {
     mostrarTela("checklist");
 }
 
-function carregarTabelaTrens(){
+function carregarTabelaTrens() {
 
     const tbody = document.getElementById("tbodyTrens");
 
     tbody.innerHTML = "";
 
-    for(let i = 1; i <= 35; i++){
+    for (let i = 1; i <= 35; i++) {
 
         tbody.innerHTML += `
+            <tr>
 
-        <tr>
+                <td class="text-center fw-bold">${i}</td>
 
-            <td class="text-center">${i}</td>
+                <td contenteditable="true"></td>
 
-            <td>
+                <td contenteditable="true"></td>
 
-                <input
-                    type="text"
-                    class="form-control tue">
+                <td contenteditable="true"></td>
 
-            </td>
-
-            <td>
-
-                <input
-                    type="text"
-                    class="form-control local">
-
-            </td>
-
-            <td>
-
-                <input
-                    type="text"
-                    class="form-control operador">
-
-            </td>
-
-        </tr>
-
+            </tr>
         `;
 
     }
+
+}
+
+function habilitarColarExcel() {
+
+    const tbody = document.getElementById("tbodyTrens");
+
+    tbody.addEventListener("paste", function (e) {
+
+        e.preventDefault();
+
+        const texto = (e.clipboardData || window.clipboardData).getData("text");
+
+        const linhas = texto.split(/\r?\n/);
+
+        const linhaInicial = e.target.parentElement.rowIndex - 1;
+        const colunaInicial = e.target.cellIndex;
+
+        linhas.forEach((linha, i) => {
+
+            if (linha.trim() === "") return;
+
+            const colunas = linha.split("\t");
+
+            colunas.forEach((valor, j) => {
+
+                const linhaTabela = tbody.rows[linhaInicial + i];
+
+                if (!linhaTabela) return;
+
+                const celula = linhaTabela.cells[colunaInicial + j];
+
+                if (!celula) return;
+
+                celula.innerText = valor;
+
+            });
+
+        });
+
+        atualizarQuantidadeFrota();
+
+    });
+
+}
+
+function atualizarQuantidadeFrota() {
+
+    const linhas = document.querySelectorAll("#tbodyTrens tr");
+
+    let total = 0;
+
+    linhas.forEach(linha => {
+
+        const tue = linha.cells[1].innerText.trim();
+
+        if (tue !== "") {
+            total++;
+        }
+
+    });
+
+    document.getElementById("frotaEquipada").value = total;
 
 }
 
@@ -195,6 +238,8 @@ function calcularTotalGestao(){
 });
 
 carregarTabelaTrens();
+
+habilitarColarExcel();
 
 calcularTotalGestao();
 // ===================================
