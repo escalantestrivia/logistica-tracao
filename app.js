@@ -842,8 +842,8 @@ y = doc.lastAutoTable.finalY + 10;
 //==========================
 // GESTÃO DE OPERADORES
 //==========================
-doc.addPage();
-y = 20;
+//doc.addPage();
+//y = 20;
 doc.setFont("helvetica","bold");
 doc.setFontSize(14);
 doc.text("GESTÃO DE OPERADORES", 14, y);
@@ -894,7 +894,8 @@ y = doc.lastAutoTable.finalY + 5;
 //==========================
 // FROTA EQUIPADA
 //==========================
-
+doc.addPage();
+y = 20;
 doc.setFont("helvetica","bold");
 doc.setFontSize(14);
 doc.text("FROTA EQUIPADA",14,y);
