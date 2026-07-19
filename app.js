@@ -181,8 +181,6 @@ function deslogar() {
 
 function iniciarRelatorio() {
 
-    
-
     const posto = document.getElementById("cmbPosto").value;
     const turno = document.getElementById("cmbTurno").value;
     const data = document.getElementById("txtData").value;
@@ -203,22 +201,24 @@ function iniciarRelatorio() {
     }
 
     const relatorio = {
-        nome: usuario.nome,
+    identificacao: {
+        escalante: usuario.nome,
         matricula: usuario.matricula,
-        posto: posto,
+        local: posto,
         turno: turno,
-        data: data,
-        checklist: [],
-        fatos: [],
-        locomotivas: [],
-        historico: []
-    };
-
+        data: data
+    },
+    checklist: {},
+    frota: [],
+    ocorrencias: [],
+    locomotivas: []
+};
     localStorage.setItem("relatorio", JSON.stringify(relatorio));
 
-relatorioIniciado = true;
+    relatorioIniciado = true;
 
-mostrarTela("checklist");
+    mostrarTela("checklist");
+
 }
 // ===================================
 // Frota Equipada
@@ -433,16 +433,33 @@ function adicionarOcorrencia() {
 
 function salvarFatos() {
 
-    mostrarTela("locomotivas");
+    let relatorio = JSON.parse(localStorage.getItem("relatorio"));
 
-    if (numeroLocomotiva === 0) {
+    relatorio.ocorrencias = [];
 
-        adicionarLocomotiva();
+    const locais = document.querySelectorAll(".localOcorrencia");
+    const descricoes = document.querySelectorAll(".descricaoOcorrencia");
+
+    for (let i = 0; i < locais.length; i++) {
+
+        relatorio.ocorrencias.push({
+
+            local: locais[i].value,
+            descricao: descricoes[i].value
+
+        });
 
     }
 
-}
+    localStorage.setItem("relatorio", JSON.stringify(relatorio));
 
+    mostrarTela("locomotivas");
+
+    if (numeroLocomotiva === 0) {
+        adicionarLocomotiva();
+    }
+
+}
 let numeroLocomotiva = 0;
 
 function salvarLocomotivas() {
