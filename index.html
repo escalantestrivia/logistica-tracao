@@ -83,43 +83,51 @@
     </div>
 </nav>
 
-<div class="container-fluid mt-3">
-    <div class="row">
+<div class="col-md-3">
 
-        <div class="col-md-3">
+    <div class="list-group shadow-sm">
 
-                <button id="menuIdentificacao" class="list-group-item list-group-item-action active"
-                    onclick="mostrarTela('identificacao')">
-                    Identificação
-                </button>
+        <button id="menuIdentificacao"
+                class="list-group-item list-group-item-action active"
+                onclick="mostrarTela('identificacao')">
+            <i class="bi bi-person-badge me-2"></i>
+            Identificação
+        </button>
 
-                <button id="menuChecklist" class="list-group-item list-group-item-action"
-                    onclick="mostrarTela('checklist')">
-                    Check List
-                </button>
+        <button id="menuChecklist"
+                class="list-group-item list-group-item-action"
+                onclick="mostrarTela('checklist')">
+            <i class="bi bi-check2-square me-2"></i>
+            Check List
+        </button>
 
-                <button id="menu" class="list-group-item list-group-item-action"
-                    onclick="mostrarTela('')">
-                     Relevantes
-                </button>
+        <button id="menuFatos"
+                class="list-group-item list-group-item-action"
+                onclick="mostrarTela('fatos')">
+            <i class="bi bi-exclamation-circle me-2"></i>
+            Relevantes
+        </button>
 
-                <button id="menuLocomotivas" class="list-group-item list-group-item-action"
-                    onclick="mostrarTela('locomotivas')">
-                    Locomotivas
-                </button>
+        <button id="menuLocomotivas"
+                class="list-group-item list-group-item-action"
+                onclick="mostrarTela('locomotivas')">
+            <i class="bi bi-train-freight-front me-2"></i>
+            Locomotivas
+        </button>
 
-               <hr>
+    </div>
 
-                <button class="btn btn-success"
-        onclick="gerarPDF()">
+    <div class="d-grid mt-3">
 
-    Finalizar Relatório
+        <button class="btn btn-success"
+                onclick="gerarPDF()">
+            <i class="bi bi-file-earmark-pdf me-2"></i>
+            Finalizar Relatório
+        </button>
 
-</button>
+    </div>
 
-            </div>
-
-        </div>
+</div>
 
         <div class="col-md-9">
 
