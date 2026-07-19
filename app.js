@@ -86,7 +86,7 @@ if (modal) {
 };   // <<< ESTA LINHA ESTÁ FALTANDO
 
 function calcularTotalGestao() {
-    alert("calcularTotalGestao executou");
+    //alert("calcularTotalGestao executou");
     const controle = parseInt(document.getElementById("controleApresentacao")?.value, 10) || 0;
     const frota = parseInt(document.getElementById("frotaEquipada")?.value, 10) || 0;
     const ausencias = parseInt(document.getElementById("ausencias")?.value, 10) || 0;
