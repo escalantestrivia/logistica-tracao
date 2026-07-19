@@ -467,7 +467,12 @@ function adicionarOcorrencia() {
 
 function salvarFatos() {
 
-    let relatorio = JSON.parse(localStorage.getItem("relatorio"));
+    const relatorio = JSON.parse(localStorage.getItem("relatorio"));
+
+    if (!relatorio) {
+        alert("Nenhum relatório foi iniciado.");
+        return;
+    }
 
     relatorio.ocorrencias = [];
 
@@ -476,12 +481,18 @@ function salvarFatos() {
 
     for (let i = 0; i < locais.length; i++) {
 
-        relatorio.ocorrencias.push({
+        const local = locais[i].value.trim();
+        const descricao = descricoes[i].value.trim();
 
-            local: locais[i].value,
-            descricao: descricoes[i].value
+        // Salva apenas ocorrências preenchidas
+        if (local !== "" || descricao !== "") {
 
-        });
+            relatorio.ocorrencias.push({
+                local: local,
+                descricao: descricao
+            });
+
+        }
 
     }
 
