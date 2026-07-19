@@ -838,6 +838,46 @@ doc.autoTable({
 });
 
 y = doc.lastAutoTable.finalY + 10;
+
+    doc.setFontSize(14);
+doc.setFont("helvetica","bold");
+doc.text("IDENTIFICAÇÃO",14,y);
+
+y += 5;
+
+doc.autoTable({
+
+    startY: y,
+
+    theme: "grid",
+
+    head: [["Campo","Informação"]],
+
+    body: [
+
+        ["Escalante", identificacao.escalante || ""],
+
+        ["Matrícula", identificacao.matricula || ""],
+
+        ["Local", identificacao.local || ""],
+
+        ["Turno", identificacao.turno || ""],
+
+        ["Data", identificacao.data || ""]
+
+    ],
+
+    styles:{
+        fontSize:10
+    },
+
+    headStyles:{
+        fillColor:[13,110,253]
+    }
+
+});
+
+y = doc.lastAutoTable.finalY + 10;
     //==========================
 // FROTA EQUIPADA
 //==========================
@@ -888,7 +928,73 @@ if(relatorio.frota && relatorio.frota.length){
     y += 10;
 
 }
-    //==========================
+//==========================
+// GESTÃO DE OPERADORES
+//==========================
+
+doc.setFont("helvetica","bold");
+doc.setFontSize(14);
+doc.text("GESTÃO DE OPERADORES", 14, y);
+
+y += 5;
+
+const checklist = relatorio.checklist || {};
+
+doc.autoTable({
+
+    startY: y,
+
+    theme: "grid",
+
+    head: [["Item", "Quantidade"]],
+
+    body: [
+
+        ["Controle de Apresentação", checklist.controleApresentacao || 0],
+
+        ["Frota Equipada", checklist.frotaEquipada || 0],
+
+        ["Ausências", checklist.ausencias || 0],
+
+        ["Viras", checklist.viras || 0],
+
+        ["Posto Escala", checklist.postoEscala || 0],
+
+        ["Outros", checklist.outros || 0],
+
+        ["Total Gestão", checklist.totalGestao || 0]
+
+    ],
+
+    styles:{
+        fontSize:10
+    },
+
+    headStyles:{
+        fillColor:[13,110,253]
+    }
+
+});
+
+y = doc.lastAutoTable.finalY + 5;
+
+doc.setFont("helvetica","bold");
+doc.text("Observações:", 14, y);
+
+y += 5;
+
+doc.setFont("helvetica","normal");
+
+const obsGestao = doc.splitTextToSize(
+    checklist.observacoes || "Sem observações.",
+    180
+);
+
+doc.text(obsGestao, 14, y);
+
+y += (obsGestao.length * 5) + 8;   
+    
+//==========================
 // FATOS RELEVANTES
 //==========================
 
