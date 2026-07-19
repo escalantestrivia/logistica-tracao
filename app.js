@@ -958,19 +958,6 @@ y = doc.lastAutoTable.finalY + 5;
 
 doc.setFont("helvetica","bold");
 doc.text("Observações:", 14, y);
-
-y += 5;
-
-doc.setFont("helvetica","normal");
-
-const obsGestao = doc.splitTextToSize(
-    checklist.observacoes || "Sem observações.",
-    180
-);
-
-doc.text(obsGestao, 14, y);
-
-y += (obsGestao.length * 5) + 8;   
     
 //==========================
 // FATOS RELEVANTES
