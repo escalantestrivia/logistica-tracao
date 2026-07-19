@@ -398,7 +398,7 @@ function salvarChecklist() {
 
         outros: parseInt(document.getElementById("outros").value) || 0,
 
-        totalGestao: document.getElementById("totalGestao").textContent,
+        totalGestao: parseInt(document.getElementById("totalGestao").textContent, 10) || 0,
 
         observacoes: document.getElementById("observacoesGestao").value
 
