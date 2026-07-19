@@ -1239,9 +1239,6 @@ for(let i=1;i<=paginas;i++){
 
 }
 
-// Obtém os dados da identificação
-const identificacao = relatorio.identificacao || {};
-
 // Data do relatório
 const dataRelatorio =
     identificacao.data ||
