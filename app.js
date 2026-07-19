@@ -791,11 +791,13 @@ async function gerarPDF() {
         y
     );
 
-    //==========================
+//==========================
 // IDENTIFICAÇÃO
 //==========================
 
 y += 10;
+
+const identificacao = relatorio.identificacao || {};
 
 doc.setFontSize(14);
 doc.setFont("helvetica","bold");
@@ -805,15 +807,25 @@ y += 5;
 
 doc.autoTable({
 
-    startY:y,
+    startY: y,
 
-    theme:"grid",
+    theme: "grid",
 
-    head:[["Campo","Informação"]],
+    head: [["Campo","Informação"]],
 
-    body:Object.entries(
-        relatorio.identificacao || {}
-    ),
+    body: [
+
+        ["Escalante", identificacao.escalante || ""],
+
+        ["Matrícula", identificacao.matricula || ""],
+
+        ["Local", identificacao.local || ""],
+
+        ["Turno", identificacao.turno || ""],
+
+        ["Data", identificacao.data || ""]
+
+    ],
 
     styles:{
         fontSize:10
