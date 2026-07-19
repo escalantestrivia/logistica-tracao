@@ -955,14 +955,11 @@ doc.autoTable({
 });
 
 y = doc.lastAutoTable.finalY + 5;
-
-doc.setFont("helvetica","bold");
-doc.text("Observações:", 14, y);
     
 //==========================
 // FATOS RELEVANTES
 //==========================
-y += 10;
+
 doc.setFont("helvetica","bold");
 doc.setFontSize(14);
 doc.text("FATOS RELEVANTES",14,y);
