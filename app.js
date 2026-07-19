@@ -909,7 +909,8 @@ y += (obsFrota.length * 5) + 8;
 //==========================
 // GESTÃO DE OPERADORES
 //==========================
-
+doc.addPage();
+y = 20;
 doc.setFont("helvetica","bold");
 doc.setFontSize(14);
 doc.text("GESTÃO DE OPERADORES", 14, y);
@@ -959,7 +960,8 @@ y = doc.lastAutoTable.finalY + 5;
 //==========================
 // FATOS RELEVANTES
 //==========================
-
+doc.addPage();
+y = 20;
 doc.setFont("helvetica","bold");
 doc.setFontSize(14);
 doc.text("FATOS RELEVANTES",14,y);
@@ -1026,7 +1028,8 @@ if (y > 250) {
     doc.addPage();
     y = 20;
 }
-
+doc.addPage();
+y = 20;
 doc.setFont("helvetica","bold");
 doc.setFontSize(14);
 doc.text("LOCOMOTIVAS", 14, y);
