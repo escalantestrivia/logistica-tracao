@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<body?
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Logística da Tração</title>
@@ -65,7 +66,7 @@
             LOGÍSTICA DA TRAÇÃO
         </span>
 
-        <div class="d-flex align-items-center ms-auto">
+        <div class="d-flex align-items-center">
 
             <span class="text-white me-3">
                 <span id="lblNome"></span> |
@@ -83,53 +84,58 @@
     </div>
 </nav>
 
-<div class="col-md-3">
+<div class="container-fluid mt-3">
 
-    <div class="list-group shadow-sm">
+    <div class="row">
 
-        <button id="menuIdentificacao"
-                class="list-group-item list-group-item-action active"
-                onclick="mostrarTela('identificacao')">
-            <i class="bi bi-person-badge me-2"></i>
-            Identificação
-        </button>
+        <!-- MENU LATERAL -->
+        <div class="col-md-3 col-lg-2">
 
-        <button id="menuChecklist"
-                class="list-group-item list-group-item-action"
-                onclick="mostrarTela('checklist')">
-            <i class="bi bi-check2-square me-2"></i>
-            Check List
-        </button>
+            <div class="list-group shadow-sm">
 
-        <button id="menuFatos"
-                class="list-group-item list-group-item-action"
-                onclick="mostrarTela('fatos')">
-            <i class="bi bi-exclamation-circle me-2"></i>
-            Relevantes
-        </button>
+                <button id="menuIdentificacao"
+                        class="list-group-item list-group-item-action active"
+                        onclick="mostrarTela('identificacao')">
+                    <i class="bi bi-person-badge me-2"></i>
+                    Identificação
+                </button>
 
-        <button id="menuLocomotivas"
-                class="list-group-item list-group-item-action"
-                onclick="mostrarTela('locomotivas')">
-            <i class="bi bi-train-freight-front me-2"></i>
-            Locomotivas
-        </button>
+                <button id="menuChecklist"
+                        class="list-group-item list-group-item-action"
+                        onclick="mostrarTela('checklist')">
+                    <i class="bi bi-check2-square me-2"></i>
+                    Check List
+                </button>
 
-    </div>
+                <button id="menuFatos"
+                        class="list-group-item list-group-item-action"
+                        onclick="mostrarTela('fatos')">
+                    <i class="bi bi-exclamation-circle me-2"></i>
+                    Relevantes
+                </button>
 
-    <div class="d-grid mt-3">
+                <button id="menuLocomotivas"
+                        class="list-group-item list-group-item-action"
+                        onclick="mostrarTela('locomotivas')">
+                    <i class="bi bi-train-freight-front me-2"></i>
+                    Locomotivas
+                </button>
 
-        <button class="btn btn-success"
-                onclick="gerarPDF()">
-            <i class="bi bi-file-earmark-pdf me-2"></i>
-            Finalizar Relatório
-        </button>
+            </div>
 
-    </div>
+            <div class="d-grid mt-3">
 
-</div>
+                <button class="btn btn-success"
+                        onclick="gerarPDF()">
+                    <i class="bi bi-file-earmark-pdf me-2"></i>
+                    Finalizar Relatório
+                </button>
 
-        <div class="col-md-9">
+            </div>
+
+        </div>
+
+        <div class="col-md-9 col-lg-10">
 
             <div id="identificacao">
 
@@ -465,7 +471,5 @@
 
 <script src="app.js"></script>
 
-<body>
-  
 </body>
 </html>
