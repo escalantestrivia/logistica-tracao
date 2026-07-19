@@ -860,12 +860,14 @@ if(relatorio.frota && relatorio.frota.length){
         head:[[
             "Qtde",
             "TUE",
+            "Local",
             "Operador(a)"
         ]],
 
         body: relatorio.frota.map(item=>[
             item.qtde,
             item.trem,
+            item.local,
             item.operador
         ]),
 
