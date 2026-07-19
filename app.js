@@ -978,66 +978,54 @@ y += (obsGestao.length * 5) + 8;
 
 doc.setFont("helvetica","bold");
 doc.setFontSize(14);
-
 doc.text("FATOS RELEVANTES",14,y);
 
 y += 8;
 
-if(relatorio.ocorrencias && relatorio.ocorrencias.length){
+if (relatorio.ocorrencias && relatorio.ocorrencias.length) {
 
-    relatorio.ocorrencias.forEach((ocorrencia,index)=>{
+    relatorio.ocorrencias.forEach((ocorrencia, index) => {
 
-        if(y>240){
+        const texto = doc.splitTextToSize(
+            ocorrencia.descricao || "Sem descrição.",
+            170
+        );
 
+        const alturaCaixa = Math.max(
+            28,
+            (texto.length * 5) + 20
+        );
+
+        if (y + alturaCaixa > 270) {
             doc.addPage();
-            y=20;
-
+            y = 20;
         }
 
         doc.setDrawColor(180);
 
         doc.roundedRect(
             12,
-            y-4,
+            y - 4,
             186,
-            28,
+            alturaCaixa,
             2,
             2
         );
 
         doc.setFontSize(11);
         doc.setFont("helvetica","bold");
-
-        doc.text(
-            "Ocorrência " + (index+1),
-            16,
-            y+2
-        );
+        doc.text("Ocorrência " + (index + 1), 16, y + 2);
 
         doc.setFont("helvetica","normal");
+        doc.text("Local: " + (ocorrencia.local || "-"), 16, y + 9);
 
-        doc.text(
-            "Local: " + ocorrencia.local,
-            16,
-            y+9
-        );
+        doc.text(texto, 16, y + 16);
 
-        const texto = doc.splitTextToSize(
-            ocorrencia.descricao || "",
-            170
-        );
-
-        doc.text(
-            texto,
-            16,
-            y+16
-        );
-
-        y += 35;
+        y += alturaCaixa + 8;
 
     });
 
-}else{
+} else {
 
     doc.setFontSize(10);
     doc.text("Nenhuma ocorrência registrada.",14,y);
@@ -1045,7 +1033,7 @@ if(relatorio.ocorrencias && relatorio.ocorrencias.length){
     y += 10;
 
 }
-    //==========================
+//==========================
 // LOCOMOTIVAS
 //==========================
 
