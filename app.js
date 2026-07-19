@@ -935,7 +935,8 @@ if(relatorio.frota && relatorio.frota.length){
     });
 
     y = doc.lastAutoTable.finalY + 5;
-
+doc.addPage();
+y = 20;
 doc.setFont("helvetica","bold");
 doc.setFontSize(11);
 doc.text("Observações:", 14, y);
