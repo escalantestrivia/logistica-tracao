@@ -791,62 +791,41 @@ async function gerarPDF() {
         y
     );
 
-    y += 10;
-        doc.setFontSize(14);
-    doc.setFont("helvetica","bold");
-    doc.text("IDENTIFICAÇÃO",14,y);
+    //==========================
+// IDENTIFICAÇÃO
+//==========================
 
-    y += 5;
+y += 10;
 
-    doc.autoTable({
+doc.setFontSize(14);
+doc.setFont("helvetica","bold");
+doc.text("IDENTIFICAÇÃO",14,y);
 
-        startY:y,
+y += 5;
 
-        theme:"grid",
+doc.autoTable({
 
-        head:[["Campo","Informação"]],
+    startY:y,
 
-        body:Object.entries(
-            relatorio.identificacao || {}
-        ),
+    theme:"grid",
 
-        styles:{
-            fontSize:10
-        },
+    head:[["Campo","Informação"]],
 
-        headStyles:{
-            fillColor:[13,110,253]
-        }
+    body:Object.entries(
+        relatorio.identificacao || {}
+    ),
 
-    });
+    styles:{
+        fontSize:10
+    },
 
-    y = doc.lastAutoTable.finalY + 10;
-        doc.setFont("helvetica","bold");
-    doc.setFontSize(14);
+    headStyles:{
+        fillColor:[13,110,253]
+    }
 
-    doc.text("GESTÃO DE OPERADORES",14,y);
+});
 
-    y += 5;
-
-    doc.autoTable({
-
-        startY:y,
-
-        theme:"striped",
-
-        head:[["Item","Valor"]],
-
-        body:Object.entries(
-            relatorio.checklist || {}
-        ),
-
-        headStyles:{
-            fillColor:[13,110,253]
-        }
-
-    });
-
-    y = doc.lastAutoTable.finalY + 10;
+y = doc.lastAutoTable.finalY + 10;
     //==========================
 // FROTA EQUIPADA
 //==========================
@@ -1121,7 +1100,7 @@ for(let i=1;i<=paginas;i++){
     doc.setFontSize(9);
 
     doc.text(
-        "Logística da Tração",
+        "Relatório de Escala - Trivia",
         14,
         295
     );
