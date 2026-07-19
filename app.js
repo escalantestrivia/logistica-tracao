@@ -1037,6 +1037,12 @@ if (relatorio.ocorrencias && relatorio.ocorrencias.length) {
 // LOCOMOTIVAS
 //==========================
 
+// Verifica se há espaço para iniciar a seção
+if (y > 250) {
+    doc.addPage();
+    y = 20;
+}
+
 doc.setFont("helvetica","bold");
 doc.setFontSize(14);
 doc.text("LOCOMOTIVAS", 14, y);
@@ -1047,11 +1053,13 @@ if (relatorio.locomotivas && relatorio.locomotivas.length) {
 
     relatorio.locomotivas.forEach((loc, index) => {
 
-        // Altura aproximada de cada ficha
-        if (y > 170) {
-            doc.addPage();
-            y = 20;
-        }
+// Altura aproximada de uma ficha completa
+const alturaFicha = 95;
+
+if (y + alturaFicha > 270) {
+    doc.addPage();
+    y = 20;
+}
 
         // Moldura
         doc.setDrawColor(120);
