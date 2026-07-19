@@ -46,10 +46,10 @@ alert("Informe a matrícula.");
 return;
 }
 
-const resposta=await fetch("./usuarios.json");
-const usuarios=await resposta.json();
+const resposta=await fetch("./patetas.json");
+const patetas=await resposta.json();
 
-const usuario=usuarios.find(u=>u.matricula===matricula);
+const usuario=patetas.find(u=>u.matricula===matricula);
 
 if(!usuario){
 alert("Matrícula não cadastrada.");
