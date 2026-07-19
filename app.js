@@ -358,7 +358,7 @@ function salvarFrota() {
 
         const inputs = tr.querySelectorAll("input");
 
-        const serie = tr.cells[0].textContent.trim();
+        const qtde = tr.cells[0].textContent.trim();
         const trem = inputs[0].value.trim();
         const local = inputs[1].value.trim();
         const operador = inputs[2].value.trim();
@@ -366,7 +366,7 @@ function salvarFrota() {
         if (trem || local || operador) {
 
             relatorio.frota.push({
-                serie,
+                qtde,
                 trem,
                 local,
                 operador
@@ -864,7 +864,7 @@ if(relatorio.frota && relatorio.frota.length){
         ]],
 
         body: relatorio.frota.map(item=>[
-            item.serie,
+            item.qtde,
             item.trem,
             item.operador
         ]),
@@ -1240,7 +1240,7 @@ function salvarFrota() {
 
             relatorio.frota.push({
 
-                serie: tr.cells[0].textContent.trim(),
+                qtde: tr.cells[0].textContent.trim(),
                 trem: trem,
                 local: local,
                 operador: operador
