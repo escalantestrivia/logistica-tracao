@@ -858,9 +858,9 @@ if(relatorio.frota && relatorio.frota.length){
         theme:"striped",
 
         head:[[
-            "Série",
-            "Trem",
-            "Operador"
+            "Qtde",
+            "TUE",
+            "Operador(a)"
         ]],
 
         body: relatorio.frota.map(item=>[
