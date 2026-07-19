@@ -1120,3 +1120,40 @@ const nomeArquivo =
 
 doc.save(nomeArquivo);
 }
+
+
+function salvarFrota() {
+
+    const relatorio = JSON.parse(localStorage.getItem("relatorio"));
+
+    relatorio.frota = [];
+
+    document.querySelectorAll("#tbodyTrens tr").forEach(tr => {
+
+        const inputs = tr.querySelectorAll("input");
+
+        const trem = inputs[0].value.trim();
+        const local = inputs[1].value.trim();
+        const operador = inputs[2].value.trim();
+
+        if (trem || local || operador) {
+
+            relatorio.frota.push({
+
+                serie: tr.cells[0].textContent.trim(),
+                trem: trem,
+                local: local,
+                operador: operador
+
+            });
+
+        }
+
+    });
+
+    localStorage.setItem(
+        "relatorio",
+        JSON.stringify(relatorio)
+    );
+
+}
