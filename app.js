@@ -1214,8 +1214,7 @@ const dataRelatorio =
     dataAtual;
 
 // Formata a data para AAAA-MM-DD
-const dataFormatada = dataRelatorio
-    .replace(/\//g, "-");
+const dataFormatada = dataRelatorio.split("-").reverse().join("-");
 
 // Turno informado
 const turno =
