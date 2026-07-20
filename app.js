@@ -823,7 +823,7 @@ doc.autoTable({
 
         ["Turno", identificacao.turno || ""],
 
-        ["Data", identificacao.data || ""]
+        ["Data", identificacao.data.split("-").reverse().join("-")]
 
     ],
 
