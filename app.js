@@ -538,7 +538,7 @@ function salvarLocomotivas() {
             adaptador: card.querySelector(".adaptador").value,
             niveis: card.querySelector(".niveis").value,
 
-            observacoes: card.querySelector(".observacoesGerais").value
+            observacoesGerais: card.querySelector(".observacoesGerais").value
 
         });
 
