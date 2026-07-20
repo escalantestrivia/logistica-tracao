@@ -889,7 +889,26 @@ doc.autoTable({
 });
 
 y = doc.lastAutoTable.finalY + 5;
-    
+
+//obsercações após frota equipada
+doc.addPage();
+y = 20;
+doc.setFont("helvetica","bold");
+doc.setFontSize(11);
+doc.text("Observações:", 14, y);
+
+y += 5;
+
+doc.setFont("helvetica","normal");
+
+const obsFrota = doc.splitTextToSize(
+    relatorio.checklist?.observacoes || "Sem observações.",
+    180
+);
+
+doc.text(obsFrota, 14, y);
+
+y += (obsFrota.length * 5) + 8;
 
 //==========================
 // FROTA EQUIPADA
@@ -935,24 +954,7 @@ if(relatorio.frota && relatorio.frota.length){
     });
 
     y = doc.lastAutoTable.finalY + 5;
-doc.addPage();
-y = 20;
-doc.setFont("helvetica","bold");
-doc.setFontSize(11);
-doc.text("Observações:", 14, y);
 
-y += 5;
-
-doc.setFont("helvetica","normal");
-
-const obsFrota = doc.splitTextToSize(
-    relatorio.checklist?.observacoes || "Sem observações.",
-    180
-);
-
-doc.text(obsFrota, 14, y);
-
-y += (obsFrota.length * 5) + 8;
 
 }else{
 
