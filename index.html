@@ -121,6 +121,13 @@
                     Locomotivas
                 </button>
 
+                <button id="menuQuilometragem"
+                     class="list-group-item list-group-item-action"
+                     onclick="mostrarTela('quilometragem')">
+                    <i class="bi bi-speedometer2 me-2"></i>
+                     Quilometragem da Frota
+                </button>
+
             </div>
 
             <div class="d-grid mt-3">
@@ -394,6 +401,40 @@
 
 </div>
 
+<div id="quilometragem" style="display:none">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">
+                Quilometragem da Frota
+            </h4>
+        </div>
+
+        <div class="card-body">
+
+            <div id="conteudoQuilometragem">
+
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+
+                <button
+                    class="btn btn-success"
+                    onclick="salvarQuilometragem()">
+
+                    Salvar
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 
 <div class="modal fade" id="modalFrota" tabindex="-1">
 
@@ -469,7 +510,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
+<script src="linha11.js"></script>
+<script src="linha12_13.js"></script>
 <script src="app.js"></script>
 
 </body>
 </html>
+
