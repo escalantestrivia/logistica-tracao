@@ -36,10 +36,21 @@ window.onload = function () {
         new Date().toISOString().split("T")[0];
 
     // Bloqueia os menus
-    document.getElementById("menuChecklist").classList.add("bloqueado");
-    document.getElementById("menuFatos").classList.add("bloqueado");
-    document.getElementById("menuLocomotivas").classList.add("bloqueado");
-    document.getElementById("menuHistorico").classList.add("bloqueado");
+ [
+    "menuChecklist",
+    "menuFatos",
+    "menuLocomotivas",
+    "menuHistorico",
+    "menuQuilometragem"
+].forEach(id => {
+
+    const menu = document.getElementById(id);
+
+    if (menu) {
+        menu.classList.add("bloqueado");
+    }
+
+});
 
     // Eventos Gestão de Operadores
     [
@@ -112,18 +123,21 @@ function calcularTotalGestao() {
 
 function mostrarTela(tela) {
 
-    if (
-        !relatorioIniciado &&
-        tela !== "identificacao"
-    ) {
+    if (!relatorioIniciado && tela !== "identificacao") {
         mostrarModalRelatorio();
         return;
     }
+
+    if (tela === "quilometragem") {
+        carregarQuilometragem();
+    }
+
     const telas = [
         "identificacao",
         "checklist",
         "fatos",
         "locomotivas",
+        "quilometragem",
         "historico"
     ];
 
@@ -132,7 +146,9 @@ function mostrarTela(tela) {
         const elemento = document.getElementById(id);
 
         if (elemento) {
-            elemento.style.display = (id === tela) ? "block" : "none";
+            elemento.style.display = (id === tela)
+                ? "block"
+                : "none";
         }
 
     });
@@ -146,6 +162,7 @@ function mostrarTela(tela) {
         checklist: "menuChecklist",
         fatos: "menuFatos",
         locomotivas: "menuLocomotivas",
+        quilometragem: "menuQuilometragem",
         historico: "menuHistorico"
     };
 
@@ -159,8 +176,9 @@ function mostrarTela(tela) {
 
 }
 
+
 // ===================================
-// Iniciar Relatório
+// Deslogar
 // ===================================
 
 function deslogar() {
@@ -377,6 +395,7 @@ function salvarFrota() {
     });
 
     localStorage.setItem("relatorio", JSON.stringify(relatorio));
+
 
 }
 
@@ -1171,6 +1190,103 @@ if (y + alturaFicha > 270) {
     y += 10;
 
 }
+
+//==========================
+// QUILOMETRAGEM DA FROTA
+//==========================
+
+doc.addPage();
+
+y = 20;
+
+doc.setFont("helvetica","bold");
+doc.setFontSize(14);
+doc.text("QUILOMETRAGEM DA FROTA",14,y);
+
+y += 6;
+
+const quilometragem = relatorio.quilometragem || [];
+
+const dadosKm = quilometragem.filter(item =>
+    item.km1 ||
+    item.km2 ||
+    item.observacao
+);
+
+if(dadosKm.length){
+
+    doc.autoTable({
+
+        startY:y,
+
+        theme:"striped",
+
+        head:[[
+            "ID",
+            "Trem",
+            "Cab.1",
+            "KM",
+            "Cab.2",
+            "KM",
+            "Observações"
+        ]],
+
+        body:dadosKm.map(item=>[
+
+            item.id,
+
+            item.trem,
+
+            item.cabine1,
+
+            item.km1 || ""
+                      ? Number(item.km1).toLocaleString("pt-BR")
+                    : "",
+
+            item.cabine2,
+
+            item.km2 || ""
+                     ? Number(item.km2).toLocaleString("pt-BR")
+                    : "",
+
+            item.observacao || ""
+
+        ]),
+
+        styles:{
+            fontSize:8,
+            cellPadding:2
+        },
+
+        headStyles:{
+            fillColor:[13,110,253]
+        },
+
+        columnStyles:{
+
+            0:{cellWidth:18},
+            1:{cellWidth:30},
+            2:{cellWidth:18},
+            3:{cellWidth:18},
+            4:{cellWidth:18},
+            5:{cellWidth:18},
+            6:{cellWidth:60}
+
+        }
+
+    });
+
+}else{
+
+    doc.setFontSize(10);
+
+    doc.text(
+        "Nenhuma quilometragem registrada.",
+        14,
+        y
+    );
+
+}
 //==========================
 // RODAPÉ
 //==========================
@@ -1224,37 +1340,262 @@ const turno =
 // Nome do arquivo
 const nomeArquivo =
     `Relatorio Escala - ${dataFormatada} - ${turno}.pdf`;
+        visualizarPDF(doc);
+        doc.save(nomeArquivo);
 
-doc.save(nomeArquivo);
 }
 
-
-function salvarFrota() {
+function carregarQuilometragem() {
 
     const relatorio = JSON.parse(localStorage.getItem("relatorio"));
 
-    relatorio.frota = [];
+    if (!relatorio) return;
 
-    document.querySelectorAll("#tbodyTrens tr").forEach(tr => {
+    const posto = relatorio.identificacao.local;
 
-        const inputs = tr.querySelectorAll("input");
+    const div = document.getElementById("conteudoQuilometragem");
 
-        const trem = inputs[0].value.trim();
-        const local = inputs[1].value.trim();
-        const operador = inputs[2].value.trim();
+    if (!div) return;
 
-        if (trem || local || operador) {
+    div.innerHTML = "";
+    habilitarColarQuilometragem();
 
-            relatorio.frota.push({
+    // Seleciona automaticamente a frota
+    const frota = (posto === "SUZ") ? linha11 : linha12_13;
 
-                qtde: tr.cells[0].textContent.trim(),
-                trem: trem,
-                local: local,
-                operador: operador
+    let html = `
 
-            });
+    <div class="row mb-3 align-items-center">
+
+    <div class="col-md-6">
+
+        <input
+            type="text"
+            id="pesquisaTrem"
+            class="form-control"
+            placeholder="Pesquisar por ID, Trem ou Cabine..."
+            onkeyup="filtrarQuilometragem()">
+
+    </div>
+
+    <div class="col-md-6 text-end">
+
+        <button
+            class="btn btn-success me-2"
+            onclick="salvarQuilometragem()">
+
+            <i class="bi bi-save"></i>
+            Salvar
+
+        </button>
+
+        <button
+            class="btn btn-danger"
+            onclick="limparQuilometragem()">
+
+            <i class="bi bi-trash"></i>
+            Limpar
+
+        </button>
+
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-hover align-middle">
+
+            <thead class="table-primary">
+
+                <tr class="text-center">
+
+                    <th>ID</th>
+                    <th>Trem</th>
+                    <th>Cabine 1</th>
+                    <th style="width:120px">KM Cab. 1</th>
+                    <th>Cabine 2</th>
+                    <th style="width:120px">KM Cab. 2</th>
+                    <th style="min-width:300px">Observações</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+    `;
+
+    frota.forEach((trem, index) => {
+
+        html += `
+
+            <tr
+                id="linhaKm_${index}"
+                data-id="${trem.id}"
+                data-trem="${trem.tue}"
+                data-cab1="${trem.cabine1}"
+                data-cab2="${trem.cabine2}">
+
+                <td class="text-center fw-bold">
+
+                    ${trem.id}
+
+                </td>
+
+                <td class="text-center">
+
+                    ${trem.tue}
+
+                </td>
+
+                <td class="text-center">
+
+                    ${trem.cabine1}
+
+                </td>
+
+                <td>
+
+                    <input
+                         type="text"
+                        class="form-control"
+                        id="km1_${index}"
+                        inputmode="numeric"
+                        oninput="formatarKM(this)">
+                </td>
+
+                <td class="text-center">
+
+                    ${trem.cabine2}
+
+                </td>
+
+                <td>
+
+                <input
+                     type="text"
+                    class="form-control"
+                    id="km2_${index}"
+                    inputmode="numeric"
+                    oninput="formatarKM(this)">
+
+                </td>
+
+                <td>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="obs_${index}"
+                        placeholder="Observações">
+
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+    html += `
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    `;
+ 
+    div.innerHTML = html;
+
+    habilitarColarQuilometragem();
+
+    const dados = relatorio.quilometragem || [];
+
+    frota.forEach((trem, index) => {
+
+        if (dados[index]) {
+
+            document.getElementById(`km1_${index}`).value =
+                dados[index].km1 || "";
+
+            document.getElementById(`km2_${index}`).value =
+                dados[index].km2 || "";
+
+            document.getElementById(`obs_${index}`).value =
+                dados[index].observacao || "";
 
         }
+
+    });
+
+}
+
+function filtrarQuilometragem() {
+
+    const pesquisa = document
+        .getElementById("pesquisaTrem")
+        .value
+        .toUpperCase()
+        .trim();
+
+    const relatorio = JSON.parse(localStorage.getItem("relatorio"));
+
+    if (!relatorio) return;
+
+    const frota =
+        relatorio.identificacao.local === "SUZ"
+            ? linha11
+            : linha12_13;
+
+    frota.forEach((trem, index) => {
+
+        const linha = document.getElementById(`linhaKm_${index}`);
+
+        if (!linha) return;
+
+        const texto = (
+            trem.id + " " +
+            trem.tue + " " +
+            trem.cabine1 + " " +
+            trem.cabine2
+        ).toUpperCase();
+
+        linha.style.display = texto.includes(pesquisa) ? "" : "none";
+
+    });
+
+}
+
+function salvarQuilometragem() {
+
+    const relatorio = JSON.parse(localStorage.getItem("relatorio"));
+
+    if (!relatorio) return;
+
+    const frota =
+        relatorio.identificacao.local === "SUZ"
+            ? linha11
+            : linha12_13;
+
+    relatorio.quilometragem = [];
+
+    frota.forEach((trem, index) => {
+
+        relatorio.quilometragem.push({
+
+            id: trem.id,
+            trem: trem.tue,
+
+            cabine1: trem.cabine1,
+            km1: document.getElementById(`km1_${index}`).value.replace(/\./g, ""),
+
+            cabine2: trem.cabine2,
+            km2: document.getElementById(`km2_${index}`).value.replace(/\./g, ""),
+
+            observacao: document.getElementById(`obs_${index}`)?.value || ""
+
+        });
 
     });
 
@@ -1263,22 +1604,93 @@ function salvarFrota() {
         JSON.stringify(relatorio)
     );
 
+    alert("Quilometragem salva com sucesso.");
+
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function habilitarColarQuilometragem() {
 
-    [
-        "controleApresentacao",
-        "frotaEquipada",
-        "ausencias",
-        "viras",
-        "postoEscala",
-        "outros"
-    ].forEach(id => {
+    const tabela = document.querySelector("#conteudoQuilometragem tbody");
 
-        document.getElementById(id)
-            ?.addEventListener("input", calcularTotalGestao);
+    if (!tabela) return;
 
-    });
+    const primeiroCampo = document.getElementById("km1_0");
 
-});
+    if (!primeiroCampo) return;
+
+    primeiroCampo.onpaste = function (e) {
+
+        e.preventDefault();
+
+        const texto = (e.clipboardData || window.clipboardData).getData("text");
+
+        const linhas = texto
+            .replace(/\r/g, "")
+            .split("\n")
+            .filter(l => l.trim() !== "");
+
+        linhas.forEach((linha, indice) => {
+
+            const colunas = linha.split("\t");
+
+const km1 = document.getElementById(`km1_${indice}`);
+const km2 = document.getElementById(`km2_${indice}`);
+
+if (km1)
+    km1.value = colunas[0] ? colunas[0].trim() : "";
+
+if (km2)
+    km2.value = colunas[2] ? colunas[2].trim() : "";
+
+        });
+
+    };
+
+}
+
+function limparQuilometragem() {
+
+    if (!confirm("Deseja limpar toda a quilometragem da frota?"))
+        return;
+
+    const relatorio = JSON.parse(localStorage.getItem("relatorio"));
+
+    if (!relatorio) return;
+
+    relatorio.quilometragem = [];
+
+    localStorage.setItem("relatorio", JSON.stringify(relatorio));
+
+    document.querySelectorAll("[id^='km1_']").forEach(campo => campo.value = "");
+    document.querySelectorAll("[id^='km2_']").forEach(campo => campo.value = "");
+    document.querySelectorAll("[id^='obs_']").forEach(campo => campo.value = "");
+
+    alert("Quilometragem limpa com sucesso.");
+
+}
+
+function formatarKM(input) {
+
+    let valor = input.value.replace(/\D/g, "");
+
+    if (valor === "") {
+        input.value = "";
+        return;
+    }
+
+    input.value = Number(valor).toLocaleString("pt-BR");
+
+}
+
+//----------------------
+// visualização do PDF
+//----------------------
+function visualizarPDF(doc) {
+
+    window.open(doc.output("bloburl"), "_blank");
+
+    setTimeout(() => {
+        doc.save(nomeArquivo);
+    }, 500);
+
+}
