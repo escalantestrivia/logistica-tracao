@@ -624,7 +624,7 @@ function adicionarLocomotiva() {
         <div class="row g-3 align-items-end">
 
             <div class="col-md-3">
-                <label class="form-label">Atendendo SA</label>
+                <label class="form-label">Atendendo APT</label>
                 <select class="form-select atendeSA" onchange="toggleSA(this)">
                     <option value="Não">Não</option>
                     <option value="Sim">Sim</option>
@@ -632,7 +632,7 @@ function adicionarLocomotiva() {
             </div>
 
             <div class="col-md-4 campoSA" style="display:none;">
-                <label class="form-label">Número da SA</label>
+                <label class="form-label">Número da APT</label>
                 <input
                     type="text"
                     class="form-control numeroSA"
