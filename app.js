@@ -636,7 +636,7 @@ function adicionarLocomotiva() {
                 <input
                     type="text"
                     class="form-control numeroSA"
-                    placeholder="Informe o número da SA">
+                    placeholder="Informe o número da APT">
             </div>
 
         </div>
